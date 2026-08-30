@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Comparativo - Tráfego Pago</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    /* Custom scrollbar for webkit */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(156, 163, 175, 0.3);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(156, 163, 175, 0.5);
+    }
+    
+    /* Print specific optimization */
+    @media print {
+      aside, header, button {
+        display: none !important;
+      }
+      main {
+        padding: 0 !important;
+      }
+      .view-panel {
+        display: block !important;
+        page-break-after: always;
+      }
+    }
+  </style>
+</head>
+<body class="bg-[#f8fafc] text-slate-800 antialiased font-sans min-h-screen flex flex-col md:flex-row">
+
+  <!-- SIDEBAR & MOBILE HEADER -->
+  <aside class="w-full md:w-64 bg-white border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-between shrink-0 p-4 md:p-0 z-30">
+    <div class="w-full">
+      <!-- Logo Area -->
+      <div class="pb-4 md:p-6 flex items-center justify-between md:justify-start gap-3 border-b border-slate-100 md:border-none">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-[#16a34a] flex items-center justify-center text-white font-bold text-lg">
+            L
+          </div>
+          <div>
+            <span class="font-bold text-slate-800 text-lg">Louyze</span>
+            <span class="text-xs block text-slate-400 font-medium">Tráfego Analytics</span>
+          </div>
+        </div>
+        <!-- Client Mobile Badge -->
+        <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xxs font-bold rounded-full border border-emerald-100 md:hidden">
+          Relatório Cliente
+        </span>
+      </div>
+
+      <!-- Navigation: Segmented Control on mobile, Sidebar menu on desktop -->
+      <div class="mt-4 md:mt-0 px-0 md:px-4">
+        <nav class="grid grid-cols-3 md:flex md:flex-col gap-1 bg-slate-100 md:bg-transparent p-1 md:p-0 rounded-xl md:rounded-none">
+          <button onclick="switchView('dashboard')" data-view="dashboard" class="nav-btn flex items-center justify-center md:justify-start gap-2.5 px-3 md:px-4 py-2.5 rounded-lg text-xs md:text-sm font-semibold transition-all w-full text-center md:text-left shadow-sm bg-white text-emerald-700">
+            <svg class="w-4 h-4 md:w-5 md:h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z"></path></svg>
+            <span class="hidden xs:inline">Dashboard</span>
+            <span class="xs:hidden">Geral</span>
+          </button>
+          <button onclick="switchView('campanhas')" data-view="campanhas" class="nav-btn flex items-center justify-center md:justify-start gap-2.5 px-3 md:px-4 py-2.5 rounded-lg text-xs md:text-sm font-medium transition-all w-full text-center md:text-left text-slate-600 hover:bg-slate-50/50">
+            <svg class="w-4 h-4 md:w-5 md:h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+            <span class="hidden xs:inline">Campanhas</span>
+            <span class="xs:hidden">Listar</span>
+          </button>
+          <button onclick="switchView('comparativos')" data-view="comparativos" class="nav-btn flex items-center justify-center md:justify-start gap-2.5 px-3 md:px-4 py-2.5 rounded-lg text-xs md:text-sm font-medium transition-all w-full text-center md:text-left text-slate-600 hover:bg-slate-50/50">
+            <svg class="w-4 h-4 md:w-5 md:h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+            <span class="hidden xs:inline">Comparativos</span>
+            <span class="xs:hidden">Comparar</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+
+    <!-- User Profile Bottom (Hidden on mobile) -->
+    <div class="p-4 border-t border-slate-200 hidden md:block">
+      <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 transition-all cursor-pointer">
+        <div class="w-9 h-9 rounded-full bg-slate-300 flex items-center justify-center font-bold text-slate-700 text-sm">
+          MT
+        </div>
+        <div>
+          <span class="font-semibold text-slate-800 text-sm block">Mestre do Tráfego</span>
+          <span class="text-xs text-slate-400 block">Gestor de Mídia</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT AREA -->
+  <main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+    <!-- Header (Hidden on mobile for cleaner app look, or kept small) -->
+    <header class="h-14 bg-white border-b border-slate-200 px-4 md:px-6 flex items-center justify-between shrink-0">
+      <div class="flex items-center gap-4 flex-1">
+        <span id="view-title" class="font-bold text-slate-800 text-base md:text-lg">Dashboard Geral</span>
+      </div>
+      <!-- Right Header Actions -->
+      <div class="flex items-center gap-3">
+        <button onclick="window.print()" class="p-2 text-slate-400 hover:text-slate-650 rounded-lg hover:bg-slate-50 transition-all" title="Imprimir Relatório">
+          <svg class="w-4.5 h-4.5 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+        </button>
+        <div class="w-7 h-7 rounded-full bg-slate-200 flex items-center justify-center font-semibold text-slate-700 text-xs">
+          L
+        </div>
+      </div>
+    </header>
+
+    <!-- VIEW: 1. DASHBOARD (Overview) -->
+    <div id="view-dashboard" class="view-panel p-4 md:p-6 space-y-4 md:space-y-6 max-w-7xl w-full mx-auto">
+      
+      <!-- Green Promo Banner (SellPilot Style) -->
+      <div class="bg-emerald-800 text-white rounded-2xl p-4 md:p-6 relative overflow-hidden shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="absolute -right-16 -top-16 w-48 h-48 bg-emerald-700 rounded-full opacity-30 pointer-events-none"></div>
+        <div class="absolute -right-4 -bottom-16 w-32 h-32 bg-emerald-600 rounded-full opacity-20 pointer-events-none"></div>
+        <div class="relative z-10 space-y-1">
+          <h2 class="text-base md:text-xl font-bold">Análise Comparativa: Eric vs. Casal</h2>
+          <p class="text-emerald-100 text-xs md:text-sm max-w-xl leading-relaxed">
+            A campanha do Eric demonstrou eficiência superior de custo e volume de conversão, convertendo 46.7% mais leads em relação ao alcance.
+          </p>
+        </div>
+        <div class="relative z-10 flex items-center shrink-0">
+          <button onclick="window.print()" class="bg-white text-emerald-800 font-semibold px-4 py-2 md:px-5 md:py-2.5 rounded-xl shadow-md hover:bg-emerald-50 active:scale-95 transition-all text-xs">
+            Imprimir Relatório
+          </button>
+        </div>
+      </div>
+
+      <!-- METRICS GRID (2 columns on mobile, 4 columns on desktop) -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+        <!-- Metric 1: Total Leads -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-3.5 md:p-5 shadow-sm flex flex-col justify-between min-h-[110px] md:min-h-0 space-y-1.5 md:space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] md:text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Leads</span>
+            <span class="p-1.5 md:p-2 rounded-lg bg-emerald-50 text-emerald-600 shrink-0">
+              <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+            </span>
+          </div>
+          <div class="flex items-baseline gap-1">
+            <span class="text-2xl md:text-3xl font-bold text-slate-800">615</span>
+          </div>
+          <div class="text-[9px] md:text-xs text-slate-450 block truncate">
+            <span class="font-semibold text-emerald-600">319</span> (E) vs <span class="font-semibold text-slate-500">296</span> (C)
+          </div>
+        </div>
+
+        <!-- Metric 2: Total Investido -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-3.5 md:p-5 shadow-sm flex flex-col justify-between min-h-[110px] md:min-h-0 space-y-1.5 md:space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] md:text-xs font-semibold text-slate-400 uppercase tracking-wider">Valor Usado</span>
+            <span class="p-1.5 md:p-2 rounded-lg bg-emerald-50 text-emerald-600 shrink-0">
+              <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </span>
+          </div>
+          <div class="flex items-baseline gap-0.5">
+            <span class="text-xl md:text-3xl font-bold text-slate-800">R$ 5.233</span>
+            <span class="text-[10px] md:text-sm font-semibold text-slate-500">,09</span>
+          </div>
+          <div class="text-[9px] md:text-xs text-slate-450 block truncate">
+            <span class="font-semibold text-emerald-600">R$ 2.372</span> vs <span class="font-semibold text-slate-500">R$ 2.861</span>
+          </div>
+        </div>
+
+        <!-- Metric 3: CPL Médio -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-3.5 md:p-5 shadow-sm flex flex-col justify-between min-h-[110px] md:min-h-0 space-y-1.5 md:space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] md:text-xs font-semibold text-slate-400 uppercase tracking-wider">CPL Médio</span>
+            <span class="p-1.5 md:p-2 rounded-lg bg-emerald-50 text-emerald-600 shrink-0">
+              <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 8h6m-5 0a3 3 0 110 6H9l3 3m-3-6h6m6 1a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </span>
+          </div>
+          <div class="flex items-baseline gap-1">
+            <span class="text-2xl md:text-3xl font-bold text-slate-800">R$ 8,51</span>
+          </div>
+          <div class="text-[9px] md:text-xs text-slate-450 block truncate">
+            <span class="font-semibold text-emerald-600">R$ 7,44</span> vs <span class="font-semibold text-red-500">R$ 9,67</span>
+          </div>
+        </div>
+
+        <!-- Metric 4: Alcance Total -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-3.5 md:p-5 shadow-sm flex flex-col justify-between min-h-[110px] md:min-h-0 space-y-1.5 md:space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] md:text-xs font-semibold text-slate-400 uppercase tracking-wider">Alcance</span>
+            <span class="p-1.5 md:p-2 rounded-lg bg-emerald-50 text-emerald-600 shrink-0">
+              <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+            </span>
+          </div>
+          <div class="flex items-baseline gap-1">
+            <span class="text-2xl md:text-3xl font-bold text-slate-800">85.115</span>
+          </div>
+          <div class="text-[9px] md:text-xs text-slate-450 block truncate">
+            <span class="font-semibold text-emerald-600">36.083</span> vs <span class="font-semibold text-slate-500">49.032</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN CHART & INSIGHTS ROW -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Left: Chart -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 md:p-6 shadow-sm lg:col-span-2 space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h3 class="text-slate-800 font-bold text-base md:text-lg">Comparativo de Desempenho</h3>
+              <p class="text-slate-400 text-xs font-medium">Visualização gráfica dos principais KPIs</p>
+            </div>
+            <div class="flex items-center gap-4 text-xs font-semibold">
+              <div class="flex items-center gap-1.5">
+                <span class="w-3.5 h-3.5 bg-emerald-500 rounded-md"></span>
+                <span class="text-slate-600">Eric</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-3.5 h-3.5 bg-slate-300 rounded-md"></span>
+                <span class="text-slate-600">Casal</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <!-- Leads Bar Chart -->
+            <div>
+              <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-3">Leads Gerados</span>
+              <div class="flex items-end gap-4 md:gap-6 h-28 md:h-36 border-b border-slate-100 pb-2 px-2 md:px-4">
+                <div class="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
+                  <div class="w-full bg-emerald-500 hover:bg-emerald-600 transition-all rounded-t-lg relative flex items-center justify-center font-bold text-white text-xs cursor-pointer" style="height: 100%;">
+                    319
+                    <div class="absolute -top-10 bg-slate-800 text-white text-xxs px-2.5 py-1.5 rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap z-20">
+                      Campanha 1 LEAD
+                    </div>
+                  </div>
+                  <span class="text-xs font-semibold text-slate-600">Eric</span>
+                </div>
+                <div class="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
+                  <div class="w-full bg-slate-300 hover:bg-slate-400 transition-all rounded-t-lg relative flex items-center justify-center font-bold text-slate-700 text-xs cursor-pointer" style="height: 92.7%;">
+                    296
+                    <div class="absolute -top-10 bg-slate-800 text-white text-xxs px-2.5 py-1.5 rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap z-20">
+                      Vendas Preenchimento
+                    </div>
+                  </div>
+                  <span class="text-xs font-semibold text-slate-600">Casal</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- CPL Bar Chart -->
+            <div>
+              <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-3">Custo por Lead (CPL)</span>
+              <div class="flex items-end gap-4 md:gap-6 h-28 md:h-36 border-b border-slate-100 pb-2 px-2 md:px-4">
+                <div class="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
+                  <div class="w-full bg-emerald-400 hover:bg-emerald-500 transition-all rounded-t-lg relative flex items-center justify-center font-bold text-white text-xs cursor-pointer" style="height: 76.9%;">
+                    R$ 7,44
+                    <div class="absolute -top-10 bg-slate-800 text-white text-xxs px-2.5 py-1.5 rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap z-20">
+                      Custo Super Eficiente (-23%)
+                    </div>
+                  </div>
+                  <span class="text-xs font-semibold text-slate-600">Eric</span>
+                </div>
+                <div class="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
+                  <div class="w-full bg-red-400 hover:bg-red-500 transition-all rounded-t-lg relative flex items-center justify-center font-bold text-white text-xs cursor-pointer" style="height: 100%;">
+                    R$ 9,67
+                    <div class="absolute -top-10 bg-slate-800 text-white text-xxs px-2.5 py-1.5 rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap z-20">
+                      CPL Elevado
+                    </div>
+                  </div>
+                  <span class="text-xs font-semibold text-slate-600">Casal</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Insights -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 md:p-6 shadow-sm space-y-6">
+          <div>
+            <h3 class="text-slate-800 font-bold text-base md:text-lg">Análise & Recomendações</h3>
+            <p class="text-slate-400 text-xs font-medium">Parecer técnico do especialista de tráfego</p>
+          </div>
+          <div class="space-y-4">
+            <div class="flex gap-3 p-3 bg-emerald-50 border border-emerald-100 rounded-xl">
+              <span class="text-emerald-600 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              </span>
+              <div class="space-y-1">
+                <h4 class="text-xs font-bold text-emerald-800">Eric é o Vencedor de ROI</h4>
+                <p class="text-xxs text-emerald-700 leading-relaxed">
+                  A campanha <strong>Eric</strong> obteve um CPL de <strong>R$ 7,44</strong>, sendo 23% mais econômica que a campanha Casal, poupando verba de conversão.
+                </p>
+              </div>
+            </div>
+            <div class="flex gap-3 p-3 bg-emerald-50 border border-emerald-100 rounded-xl">
+              <span class="text-emerald-600 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+              </span>
+              <div class="space-y-1">
+                <h4 class="text-xs font-bold text-emerald-800">Eficiência de Conversão: +46.7%</h4>
+                <p class="text-xxs text-emerald-700 leading-relaxed">
+                  A campanha Eric converteu **0.88%** do alcance em leads, enquanto a campanha Casal converteu apenas **0.60%**. A conversão do criativo Eric é muito mais forte.
+                </p>
+              </div>
+            </div>
+            <div class="flex gap-3 p-3 bg-amber-50 border border-amber-100 rounded-xl">
+              <span class="text-amber-600 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+              </span>
+              <div class="space-y-1">
+                <h4 class="text-xs font-bold text-amber-800">Atenção com Desperdício de Verba</h4>
+                <p class="text-xxs text-amber-700 leading-relaxed">
+                  A campanha <strong>Casal</strong> usou o maior orçamento (R$ 2.861,04) para gerar menos leads (296). Recomenda-se remanejar parte dessa verba para a campanha Eric.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DETAILED CAMPAIGN TABLE -->
+      <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+        <div class="p-4 md:p-6 border-b border-slate-100 flex items-center justify-between">
+          <div>
+            <h3 class="text-slate-800 font-bold text-base md:text-lg">Tabela de Desempenho de Mídia</h3>
+            <p class="text-slate-400 text-xs font-medium">Dados brutos de taxa de eficiência</p>
+          </div>
+          <!-- Mobile Horizontal Scroll Tip -->
+          <span class="text-[9px] md:hidden font-bold text-slate-400 uppercase tracking-widest animate-pulse flex items-center gap-1">
+            Arrastar ↔
+          </span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse min-w-[700px] md:min-w-0">
+            <thead>
+              <tr class="bg-slate-50 border-b border-slate-100">
+                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Empresa (Médico)</th>
+                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Nome da Campanha</th>
+                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider text-center">Leads</th>
+                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider text-center">Alcance</th>
+                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider text-center">CPL</th>
+                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider text-center">Conversão</th>
+                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Valor Usado</th>
+                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Status CPL</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-sm">
+              <tr class="hover:bg-slate-50/50 transition-colors">
+                <td class="px-6 py-4 font-bold text-slate-800">Eric</td>
+                <td class="px-6 py-4 text-slate-500">Campanha 1 LEAD</td>
+                <td class="px-6 py-4 text-center font-semibold text-slate-800">319</td>
+                <td class="px-6 py-4 text-center text-slate-500">36.083</td>
+                <td class="px-6 py-4 text-center font-bold text-emerald-600">R$ 7,44</td>
+                <td class="px-6 py-4 text-center text-slate-500">0,88%</td>
+                <td class="px-6 py-4 font-semibold text-slate-800">R$ 2.372,05</td>
+                <td class="px-6 py-4">
+                  <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100 border-solid">Excelente CPL</span>
+                </td>
+              </tr>
+              <tr class="hover:bg-slate-50/50 transition-colors">
+                <td class="px-6 py-4 font-bold text-slate-800">Casal</td>
+                <td class="px-6 py-4 text-slate-500">Vendas Preenchimento</td>
+                <td class="px-6 py-4 text-center font-semibold text-slate-800">296</td>
+                <td class="px-6 py-4 text-center text-slate-500">49.032</td>
+                <td class="px-6 py-4 text-center font-bold text-slate-800">R$ 9,67</td>
+                <td class="px-6 py-4 text-center text-slate-500">0,60%</td>
+                <td class="px-6 py-4 font-semibold text-slate-800">R$ 2.861,04</td>
+                <td class="px-6 py-4">
+                  <span class="px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-100 border-solid">Ajustar Otimização</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW: 2. CAMPANHAS (Campanhas Detail View) -->
+    <div id="view-campanhas" class="view-panel p-4 md:p-6 space-y-6 max-w-7xl w-full mx-auto hidden">
+      <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-4 md:p-6 space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+          <div>
+            <h3 class="text-slate-800 font-bold text-base md:text-lg">Gerenciamento Técnico</h3>
+            <p class="text-slate-400 text-xs font-medium">Estrutura de canais de veiculação</p>
+          </div>
+          <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-full text-[10px] md:text-xs font-bold border border-emerald-100">
+            2 Ativas
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Campaign 1: Eric -->
+          <div class="border border-slate-200 rounded-xl p-4 md:p-5 hover:border-emerald-500 hover:shadow-sm transition-all duration-300 space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">Médico: Eric</span>
+                <h4 class="text-slate-800 font-bold text-base md:text-lg mt-0.5">Campanha 1 LEAD</h4>
+              </div>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-3 text-xs">
+              <div class="bg-slate-50 p-2.5 md:p-3 rounded-lg">
+                <span class="text-slate-400 block text-[10px] mb-0.5">Leads</span>
+                <span class="font-bold text-slate-800 text-sm md:text-base">319 Leads</span>
+              </div>
+              <div class="bg-slate-50 p-2.5 md:p-3 rounded-lg">
+                <span class="text-slate-400 block text-[10px] mb-0.5">CPL</span>
+                <span class="font-bold text-emerald-600 text-sm md:text-base">R$ 7,44</span>
+              </div>
+              <div class="bg-slate-50 p-2.5 md:p-3 rounded-lg">
+                <span class="text-slate-400 block text-[10px] mb-0.5">Verba</span>
+                <span class="font-bold text-slate-800 text-sm md:text-base">R$ 2.372,05</span>
+              </div>
+              <div class="bg-slate-50 p-2.5 md:p-3 rounded-lg">
+                <span class="text-slate-400 block text-[10px] mb-0.5">Público</span>
+                <span class="font-bold text-slate-800 text-[11px] leading-tight">Mulheres, 25-54</span>
+              </div>
+            </div>
+
+            <div class="text-xs space-y-2 border-t border-slate-100 pt-4">
+              <div class="flex justify-between">
+                <span class="text-slate-400">Canal:</span>
+                <span class="font-semibold text-slate-700">Meta Ads</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-400">Objetivo:</span>
+                <span class="font-semibold text-slate-700">Direct / WhatsApp</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-400">Raio:</span>
+                <span class="font-semibold text-slate-700">Local (10km)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Campaign 2: Casal -->
+          <div class="border border-slate-200 rounded-xl p-4 md:p-5 hover:border-emerald-500 hover:shadow-sm transition-all duration-300 space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">Médico: Casal</span>
+                <h4 class="text-slate-800 font-bold text-base md:text-lg mt-0.5">Vendas Preenchimento</h4>
+              </div>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-3 text-xs">
+              <div class="bg-slate-50 p-2.5 md:p-3 rounded-lg">
+                <span class="text-slate-400 block text-[10px] mb-0.5">Leads</span>
+                <span class="font-bold text-slate-800 text-sm md:text-base">296 Leads</span>
+              </div>
+              <div class="bg-slate-50 p-2.5 md:p-3 rounded-lg">
+                <span class="text-slate-400 block text-[10px] mb-0.5">CPL</span>
+                <span class="font-bold text-slate-800 text-sm md:text-base">R$ 9,67</span>
+              </div>
+              <div class="bg-slate-50 p-2.5 md:p-3 rounded-lg">
+                <span class="text-slate-400 block text-[10px] mb-0.5">Verba</span>
+                <span class="font-bold text-slate-800 text-sm md:text-base">R$ 2.861,04</span>
+              </div>
+              <div class="bg-slate-50 p-2.5 md:p-3 rounded-lg">
+                <span class="text-slate-400 block text-[10px] mb-0.5">Público</span>
+                <span class="font-bold text-slate-800 text-[11px] leading-tight">Mulheres, 25-54</span>
+              </div>
+            </div>
+
+            <div class="text-xs space-y-2 border-t border-slate-100 pt-4">
+              <div class="flex justify-between">
+                <span class="text-slate-400">Canal:</span>
+                <span class="font-semibold text-slate-700">Meta Ads</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-400">Objetivo:</span>
+                <span class="font-semibold text-slate-700">Direct / WhatsApp</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-400">Raio:</span>
+                <span class="font-semibold text-slate-700">Local (10km)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW: 3. COMPARATIVOS (Comparativos View) -->
+    <div id="view-comparativos" class="view-panel p-4 md:p-6 space-y-6 max-w-7xl w-full mx-auto hidden">
+      <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-4 md:p-6 space-y-6">
+        <div class="border-b border-slate-100 pb-4">
+          <h3 class="text-slate-800 font-bold text-base md:text-lg">Análise Comparativa Cruzada</h3>
+          <p class="text-slate-400 text-xs font-medium">Cruzamento direto de dados e taxas de conversão</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Leads & Cost comparison -->
+          <div class="border border-slate-100 rounded-2xl p-4 md:p-5 space-y-4">
+            <h4 class="text-slate-800 font-bold text-xs md:text-sm">Distribuição de Conversão (Leads)</h4>
+            <div class="space-y-2">
+              <div class="flex justify-between text-[10px] md:text-xs font-semibold">
+                <span class="text-emerald-600">Eric (319 leads) - 51,9%</span>
+                <span class="text-slate-400">Casal (296 leads) - 48,1%</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-3 flex overflow-hidden">
+                <div class="bg-emerald-500 h-full" style="width: 51.9%"></div>
+                <div class="bg-slate-300 h-full" style="width: 48.1%"></div>
+              </div>
+            </div>
+            
+            <h4 class="text-slate-800 font-bold text-xs md:text-sm pt-2">Distribuição de Investimento (Spent)</h4>
+            <div class="space-y-2">
+              <div class="flex justify-between text-[10px] md:text-xs font-semibold">
+                <span class="text-emerald-500">Eric (R$ 2.372) - 45,3%</span>
+                <span class="text-slate-500">Casal (R$ 2.861) - 54,7%</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-3 flex overflow-hidden">
+                <div class="bg-emerald-400 h-full" style="width: 45.3%"></div>
+                <div class="bg-slate-300 h-full" style="width: 54.7%"></div>
+              </div>
+            </div>
+            <p class="text-[10px] text-slate-400 leading-relaxed mt-2">
+              *Nota: A campanha Eric utilizou menos verba (45.3% do total) para gerar a maioria dos leads (51.9%).
+            </p>
+          </div>
+
+          <!-- Reach vs Conversion comparison -->
+          <div class="border border-slate-100 rounded-2xl p-4 md:p-5 space-y-4">
+            <h4 class="text-slate-800 font-bold text-xs md:text-sm">Taxa de Conversão por Alcance</h4>
+            
+            <div class="space-y-2">
+              <div class="flex justify-between text-[11px] md:text-xs">
+                <span class="font-bold text-slate-700">Eric (Campanha 1 LEAD)</span>
+                <span class="font-bold text-emerald-600">0,88%</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2">
+                <div class="bg-emerald-500 h-full rounded-full" style="width: 100%"></div>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <div class="flex justify-between text-[11px] md:text-xs">
+                <span class="font-bold text-slate-700">Casal (Vendas Preenchimento)</span>
+                <span class="font-bold text-slate-500">0,60%</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2">
+                <div class="bg-slate-400 h-full rounded-full" style="width: 68%"></div>
+              </div>
+            </div>
+
+            <div class="bg-slate-50 rounded-xl p-3 md:p-4 mt-2">
+              <h5 class="text-xs font-bold text-slate-700 mb-1">Métrica de Otimização:</h5>
+              <p class="text-[10px] md:text-xs text-slate-500 leading-relaxed">
+                A cada **10.000 pessoas alcançadas**:
+                <br>• O **Eric** entrega **88 leads**.
+                <br>• O **Casal** entrega **60 leads**.
+                <br>Diferença líquida de **+28 leads** apenas otimizando o criativo.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- JAVASCRIPT FOR VIEW NAVIGATION -->
+  <script>
+    function switchView(viewName) {
+      // 1. Hide all panels
+      document.querySelectorAll('.view-panel').forEach(panel => {
+        panel.classList.add('hidden');
+      });
+      // 2. Show active panel
+      document.getElementById('view-' + viewName).classList.remove('hidden');
+      
+      // 3. Update Title in Header
+      const titles = {
+        'dashboard': 'Dashboard Geral',
+        'campanhas': 'Campanhas de Tráfego',
+        'comparativos': 'Comparativos de Desempenho'
+      };
+      document.getElementById('view-title').innerText = titles[viewName];
+      
+      // 4. Reset style for all navigation buttons
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.className = "nav-btn flex items-center justify-center md:justify-start gap-2.5 px-3 md:px-4 py-2.5 rounded-lg text-xs md:text-sm font-medium transition-all w-full text-center md:text-left text-slate-600 hover:bg-slate-50/50";
+      });
+      
+      // 5. Apply active style to the selected view button
+      document.querySelectorAll(`[data-view="${viewName}"]`).forEach(btn => {
+        btn.className = "nav-btn flex items-center justify-center md:justify-start gap-2.5 px-3 md:px-4 py-2.5 rounded-lg text-xs md:text-sm font-semibold transition-all w-full text-center md:text-left shadow-sm bg-white text-emerald-700 md:bg-emerald-50 md:shadow-none";
+      });
+    }
+  </script>
+</body>
+</html>
