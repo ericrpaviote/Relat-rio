@@ -49,7 +49,7 @@
             L
           </div>
           <div>
-            <span class="font-bold text-slate-800 text-lg">Louyze</span>
+            <span class="font-bold text-slate-800 text-base block leading-tight">Louyse Ragazzi</span>
             <span class="text-xs block text-slate-400 font-medium">Tráfego Analytics</span>
           </div>
         </div>
@@ -100,7 +100,7 @@
     <!-- Header (Hidden on mobile for cleaner app look, or kept small) -->
     <header class="h-14 bg-white border-b border-slate-200 px-4 md:px-6 flex items-center justify-between shrink-0">
       <div class="flex items-center gap-4 flex-1">
-        <span id="view-title" class="font-bold text-slate-800 text-base md:text-lg">Dashboard Geral</span>
+        <span id="view-title" class="font-bold text-slate-800 text-lg md:text-xl">Dashboard Geral</span>
       </div>
       <!-- Right Header Actions -->
       <div class="flex items-center gap-3">
@@ -136,7 +136,7 @@
       <!-- METRICS GRID (2 columns on mobile, 4 columns on desktop) -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         <!-- Metric 1: Total Leads -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-3.5 md:p-5 shadow-sm flex flex-col justify-between min-h-[110px] md:min-h-0 space-y-1.5 md:space-y-3">
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col justify-between min-h-[140px] md:min-h-0 space-y-2">
           <div class="flex items-center justify-between">
             <span class="text-[10px] md:text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Leads</span>
             <span class="p-1.5 md:p-2 rounded-lg bg-emerald-50 text-emerald-600 shrink-0">
@@ -146,13 +146,15 @@
           <div class="flex items-baseline gap-1">
             <span class="text-2xl md:text-3xl font-bold text-slate-800">615</span>
           </div>
-          <div class="text-[9px] md:text-xs text-slate-450 block truncate">
-            <span class="font-semibold text-emerald-600">319</span> (E) vs <span class="font-semibold text-slate-500">296</span> (C)
+          <!-- Detailed Campanha breakdown inside card -->
+          <div class="text-[10px] md:text-xs text-slate-500 border-t border-slate-100 pt-2 space-y-0.5">
+            <div class="flex justify-between"><span>Eric:</span> <span class="font-semibold text-emerald-600">319</span></div>
+            <div class="flex justify-between"><span>Casal:</span> <span class="font-semibold text-slate-500">296</span></div>
           </div>
         </div>
 
         <!-- Metric 2: Total Investido -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-3.5 md:p-5 shadow-sm flex flex-col justify-between min-h-[110px] md:min-h-0 space-y-1.5 md:space-y-3">
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col justify-between min-h-[140px] md:min-h-0 space-y-2">
           <div class="flex items-center justify-between">
             <span class="text-[10px] md:text-xs font-semibold text-slate-400 uppercase tracking-wider">Valor Usado</span>
             <span class="p-1.5 md:p-2 rounded-lg bg-emerald-50 text-emerald-600 shrink-0">
@@ -163,13 +165,14 @@
             <span class="text-xl md:text-3xl font-bold text-slate-800">R$ 5.233</span>
             <span class="text-[10px] md:text-sm font-semibold text-slate-500">,09</span>
           </div>
-          <div class="text-[9px] md:text-xs text-slate-450 block truncate">
-            <span class="font-semibold text-emerald-600">R$ 2.372</span> vs <span class="font-semibold text-slate-500">R$ 2.861</span>
+          <div class="text-[10px] md:text-xs text-slate-500 border-t border-slate-100 pt-2 space-y-0.5">
+            <div class="flex justify-between"><span>Eric:</span> <span class="font-semibold text-emerald-600 text-[10px] md:text-xs">R$ 2.372,05</span></div>
+            <div class="flex justify-between"><span>Casal:</span> <span class="font-semibold text-slate-500 text-[10px] md:text-xs">R$ 2.861,04</span></div>
           </div>
         </div>
 
         <!-- Metric 3: CPL Médio -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-3.5 md:p-5 shadow-sm flex flex-col justify-between min-h-[110px] md:min-h-0 space-y-1.5 md:space-y-3">
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col justify-between min-h-[140px] md:min-h-0 space-y-2">
           <div class="flex items-center justify-between">
             <span class="text-[10px] md:text-xs font-semibold text-slate-400 uppercase tracking-wider">CPL Médio</span>
             <span class="p-1.5 md:p-2 rounded-lg bg-emerald-50 text-emerald-600 shrink-0">
@@ -179,13 +182,14 @@
           <div class="flex items-baseline gap-1">
             <span class="text-2xl md:text-3xl font-bold text-slate-800">R$ 8,51</span>
           </div>
-          <div class="text-[9px] md:text-xs text-slate-450 block truncate">
-            <span class="font-semibold text-emerald-600">R$ 7,44</span> vs <span class="font-semibold text-red-500">R$ 9,67</span>
+          <div class="text-[10px] md:text-xs text-slate-500 border-t border-slate-100 pt-2 space-y-0.5">
+            <div class="flex justify-between"><span>Eric:</span> <span class="font-semibold text-emerald-600">R$ 7,44</span></div>
+            <div class="flex justify-between"><span>Casal:</span> <span class="font-semibold text-slate-500">R$ 9,67</span></div>
           </div>
         </div>
 
         <!-- Metric 4: Alcance Total -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-3.5 md:p-5 shadow-sm flex flex-col justify-between min-h-[110px] md:min-h-0 space-y-1.5 md:space-y-3">
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col justify-between min-h-[140px] md:min-h-0 space-y-2">
           <div class="flex items-center justify-between">
             <span class="text-[10px] md:text-xs font-semibold text-slate-400 uppercase tracking-wider">Alcance</span>
             <span class="p-1.5 md:p-2 rounded-lg bg-emerald-50 text-emerald-600 shrink-0">
@@ -195,8 +199,9 @@
           <div class="flex items-baseline gap-1">
             <span class="text-2xl md:text-3xl font-bold text-slate-800">85.115</span>
           </div>
-          <div class="text-[9px] md:text-xs text-slate-450 block truncate">
-            <span class="font-semibold text-emerald-600">36.083</span> vs <span class="font-semibold text-slate-500">49.032</span>
+          <div class="text-[10px] md:text-xs text-slate-500 border-t border-slate-100 pt-2 space-y-0.5">
+            <div class="flex justify-between"><span>Eric:</span> <span class="font-semibold text-emerald-600">36.083</span></div>
+            <div class="flex justify-between"><span>Casal:</span> <span class="font-semibold text-slate-500">49.032</span></div>
           </div>
         </div>
       </div>
@@ -335,7 +340,7 @@
           <table class="w-full text-left border-collapse min-w-[700px] md:min-w-0">
             <thead>
               <tr class="bg-slate-50 border-b border-slate-100">
-                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Empresa (Médico)</th>
+                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Médico</th>
                 <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Nome da Campanha</th>
                 <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider text-center">Leads</th>
                 <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider text-center">Alcance</th>
@@ -394,7 +399,7 @@
           <div class="border border-slate-200 rounded-xl p-4 md:p-5 hover:border-emerald-500 hover:shadow-sm transition-all duration-300 space-y-4">
             <div class="flex items-center justify-between">
               <div>
-                <span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">Médico: Eric</span>
+                <span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">Eric</span>
                 <h4 class="text-slate-800 font-bold text-base md:text-lg mt-0.5">Campanha 1 LEAD</h4>
               </div>
               <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -439,7 +444,7 @@
           <div class="border border-slate-200 rounded-xl p-4 md:p-5 hover:border-emerald-500 hover:shadow-sm transition-all duration-300 space-y-4">
             <div class="flex items-center justify-between">
               <div>
-                <span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">Médico: Casal</span>
+                <span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">Casal</span>
                 <h4 class="text-slate-800 font-bold text-base md:text-lg mt-0.5">Vendas Preenchimento</h4>
               </div>
               <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
