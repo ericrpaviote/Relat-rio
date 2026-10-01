@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Resultados de campanha – Portas de aço automáticas</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#eceff5;--card:#fff;--panel:#f7f9fd;--ink:#1d2536;--mut:#7a8499;--line:#e8ecf3;--blue:#4a8de0;--teal:#35b29b;--coral:#ef6b5a;--orange:#f5a83c;--purple:#8b6fd6;--acc:#4a8de0;--tint:#e6f0fd;--soft:#cdd6e8;--sh:0 1px 2px rgba(29,37,54,.05),0 8px 22px rgba(29,37,54,.06)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);color-scheme:light}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.5 "Plus Jakarta Sans",system-ui,sans-serif}
+h1,h2,.n{margin:0;font-weight:700;letter-spacing:-.02em;line-height:1.15}
+.w{max-width:1040px;margin:0 auto;padding:0 20px}
+header{padding:18px 0 0}
+.app{display:flex;align-items:center;gap:10px;padding:0 2px 14px;flex-wrap:wrap}
+.app b{font-size:17px}.sp{flex:1}
+.lg{width:28px;height:28px;border-radius:50%;border:6px solid var(--teal);border-top-color:var(--blue);border-left-color:var(--orange)}
+.pill{font-size:13px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:6px 12px;color:var(--ink)}
+.av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));color:#fff;font-weight:700;font-size:12px;display:grid;place-items:center}
+header p{margin:0 0 8px;color:var(--mut);font-size:14px}
+h1{font-size:clamp(24px,4.4vw,36px);max-width:22ch}
+.cmp{margin-top:20px;display:grid;gap:9px}
+.r{display:grid;grid-template-columns:minmax(110px,170px) 1fr 56px;gap:10px;align-items:center;font-size:14px}
+.r .t{height:12px;background:var(--line);border-radius:99px;overflow:hidden}
+.r .t i{display:block;height:100%;background:var(--soft);border-radius:99px}
+.r.me .t i{background:var(--blue)}.r.me{font-weight:700}
+.r b{text-align:right;font-weight:600}
+main{padding:0 0 48px}
+section{margin-top:28px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--sh)}
+section.plain{background:none;border:0;box-shadow:none;padding:0}
+section.plain .k{grid-template-columns:repeat(6,1fr)}
+section.plain .c{padding:14px}
+section.plain .n{font-size:clamp(19px,2.1vw,22px);white-space:nowrap}
+@media (max-width:900px){section.plain .k{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:520px){section.plain .k{grid-template-columns:repeat(2,1fr)}}
+h2{font-size:18px;margin-bottom:4px}
+.sub{color:var(--mut);margin:0 0 14px;max-width:64ch;font-size:14px}
+.k{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.c{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--sh)}
+section .c{background:var(--panel);box-shadow:none}
+section.plain .c{background:var(--card);box-shadow:var(--sh)}
+.c .n{font-size:28px}.c span{color:var(--mut);font-size:13px}
+.k>.c::after{content:"\2197";position:absolute;top:12px;right:14px;color:var(--blue);font-weight:700;font-size:15px}
+.k>.c:nth-child(even)::after{color:var(--teal)}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.tb{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:right;padding:9px 6px;border-bottom:1px solid var(--line);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+th:first-child,td:first-child{text-align:left;white-space:normal}
+th{color:var(--mut);font-weight:600;font-size:13px}
+.bar{display:inline-block;height:8px;background:var(--teal);border-radius:99px;vertical-align:middle;margin-right:6px}
+.big{font-size:40px}
+label{display:block;font-size:13px;color:var(--mut);margin-bottom:10px}
+input{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+input:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+.out{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.note{font-size:12.5px;color:var(--mut);margin-top:10px}
+footer{padding:8px 0 40px;color:var(--mut);font-size:13px}
+.h{background:var(--tint)}
+.hb{display:grid;grid-template-columns:120px 1fr 52px;gap:8px;align-items:center;font-size:14px;margin:7px 0}
+.hb .t{height:12px;background:var(--line);border-radius:99px;overflow:hidden}
+.hb i{display:block;height:100%;background:var(--soft);border-radius:99px}
+.hb.me i{background:var(--blue)}.hb.me{font-weight:700}.hb b{text-align:right}
+.tx{fill:var(--mut)}
+.gt{margin:14px 0 2px;color:var(--mut);font-size:13px;font-weight:600}
+.dn{width:92px;height:92px;flex:none;border-radius:50%;background:conic-gradient(var(--cc,var(--blue)) calc(var(--p)*1%),var(--line) 0);display:grid;place-items:center}
+.dn b{width:70px;height:70px;border-radius:50%;background:var(--panel);display:grid;place-items:center;font-size:18px;font-weight:700}
+</style>
+</head>
+<body>
+<header><div class="w"><div class="app"><div class="lg"></div><b>Resultados da campanha</b><span>▾</span><div class="sp"></div><span class="pill">1 jan – 30 jun, 2026</span><span class="av">GA</span></div><div class="c" style="padding:22px">
+<p>Google Ads · jan–jun/2026 · portas de aço automáticas, Belo Horizonte e região</p>
+<h1>Quando o cliente pesquisa, o nosso anúncio aparece primeiro.</h1>
+<div class="cmp" id="cmp" aria-label="Parcela de impressões no leilão"></div>
+<p style="margin-top:12px;font-size:14px">Parcela de impressões no leilão: quanto das buscas elegíveis cada anunciante realmente ocupou.</p>
+</div></div></header>
+<main class="w">
+<section class="plain" style="margin-top:24px"><div class="k" id="k"></div></section>
+<section>
+<h2>Resultado em vendas</h2>
+<p class="sub">Além dos cliques, a campanha sustentou um ritmo de vendas constante, segundo o controle comercial do cliente.</p>
+<div class="k">
+<div class="c"><div class="n">25 a 30</div><span>portas de aço vendidas por mês</span></div>
+<div class="c"><div class="n">R$ 292 a 351</div><span>de investimento em anúncios por porta vendida</span></div>
+<div class="c"><div class="n">1 a cada 33–40</div><span>cliques termina em venda (2,5% a 3,0%)</span></div>
+<div class="c"><div class="n">150 a 180</div><span>portas vendidas em 6 meses, com R$ 52,6 mil investidos</span></div>
+</div>
+</section>
+
+<section>
+<h2>Antes e depois: 2024 × 2026</h2>
+<p class="sub">Os primeiros 6 meses da campanha (abr–set/2024) comparados com o semestre mais recente (jan–jun/2026).</p>
+<div class="k">
+<div class="c"><div class="n big">2,1×</div><span>parcela de impressões: de 19,5% para 40,6%</span></div>
+<div class="c"><div class="n big">+20 p.p.</div><span>anúncios em 1ª posição: de 31,1% para 51,0%</span></div>
+<div class="c"><div class="n big">4º → 1º</div><span>colocação em 1ª posição entre todos os anunciantes</span></div>
+</div>
+<div class="c" style="margin-top:12px"><b>Três indicadores do leilão</b><div id="gp"></div></div>
+<div class="g2" style="margin-top:12px">
+<div class="c"><b>1ª posição em 2024</b><div id="rk1"></div></div>
+<div class="c"><b>1ª posição em 2026</b><div id="rk2"></div></div>
+</div>
+<p class="note">Cada barra é o % das impressões do anunciante em 1ª posição na página. Fonte: relatório de informações do leilão. Os concorrentes medidos não são exatamente os mesmos nos dois períodos.</p>
+<div class="g2" style="margin-top:12px">
+<div class="c"><b>Cliques por mês em 2024</b><svg id="c2" viewBox="0 0 340 150" width="100%"></svg><span class="note">Julho/2024 não incluído no gráfico.</span></div>
+<div class="c"><b>Cliques por mês em 2026</b><svg id="c1" viewBox="0 0 340 150" width="100%"></svg></div>
+</div>
+<div class="k" style="margin-top:12px">
+<div class="c"><span>Investimento no período</span><div class="n">R$ 20,3 mil → R$ 52,6 mil</div></div>
+<div class="c"><span>Custo médio por clique</span><div class="n">R$ 4,25 → R$ 8,75</div></div>
+</div>
+<p class="note">O custo por clique subiu junto com o investimento e com a disputa por posição.</p>
+</section>
+
+<section>
+<h2>Crescimento da empresa no período</h2>
+<p class="sub">Faturamento bruto mensal do cliente em 2024, conforme declaração assinada pelo contador. Janeiro = 1×.</p>
+<div class="c"><svg id="c4" viewBox="0 0 340 150" width="100%"></svg><span class="note">Barras coloridas: abril a setembro, o período analisado acima.</span></div>
+<div class="k" style="margin-top:12px">
+<div class="c"><div class="n">3,6×</div><span>faturamento médio mensal de abr–set/2024 em relação a jan–mar/2024</span></div>
+<div class="c"><div class="n">8,1×</div><span>faturamento de novembro em relação a janeiro de 2024</span></div>
+<div class="c"><div class="n">R$ 16</div><span>de faturamento total da empresa para cada R$ 1 em anúncios (abr–set/2024)</span></div>
+</div>
+<p class="note">É o faturamento total da empresa, que inclui vendas de outras origens. Não é o retorno exclusivo dos anúncios.</p>
+</section>
+
+<section>
+<h2>Posição: quase sempre no topo</h2>
+<p class="sub">Aparecer na parte de cima da página e em 1º lugar é o que gera a ligação. Nesses dois indicadores a campanha ficou à frente de todos os concorrentes medidos.</p>
+<div class="g2">
+<div class="c" style="display:flex;gap:16px;align-items:center"><div class="dn" style="--p:91;--cc:var(--teal)"><b>91%</b></div><span>das impressões na parte superior da página</span></div>
+<div class="c" style="display:flex;gap:16px;align-items:center"><div class="dn" style="--p:51;--cc:var(--purple)"><b>51%</b></div><span>das impressões na 1ª posição (o concorrente mais próximo: 47%)</span></div>
+</div>
+<div class="c tb" style="margin-top:12px"><table id="auc"></table></div>
+<p class="note">“Acima de você” = % das vezes em que o concorrente ficou numa posição melhor quando os dois anúncios apareceram na mesma busca. Fonte: relatório de informações do leilão.</p>
+</section>
+
+<section>
+<h2>De onde vêm os cliques</h2>
+<p class="sub">82% dos cliques vêm do celular. Já o computador fica mais caro por clique.</p>
+<div class="g2" style="margin-bottom:12px">
+<div class="c" style="display:flex;gap:16px;align-items:center"><div class="dn" style="--p:82"><b>82%</b></div><span>dos cliques vêm do celular (4.940 cliques)</span></div>
+<div class="c" style="display:flex;gap:16px;align-items:center"><div class="dn" style="--p:18;--cc:var(--orange)"><b>18%</b></div><span>vêm do computador (1.070 cliques)</span></div>
+</div>
+<div class="c tb"><table id="dev"></table></div>
+</section>
+
+<section>
+<h2>Cidades que mais converteram</h2>
+<p class="sub">Belo Horizonte concentra quase metade dos cliques, e a região metropolitana completa o alcance. O CPC varia de R$ 7 a R$ 10 conforme a cidade.</p>
+<div class="c tb"><table id="loc"></table></div>
+</section>
+
+<section>
+<h2>Palavras-chave e controle de desperdício</h2>
+<div class="g2">
+<div class="c"><div class="n big">904</div><span>palavras negativas cadastradas para bloquear buscas sem intenção de compra</span></div>
+<div class="c"><div class="n big">78</div><span>termos de pesquisa excluídos e 129 adicionados à campanha após análise</span></div>
+</div>
+<div class="c tb" style="margin-top:12px"><table id="kw"></table></div>
+</section>
+
+<section>
+<h2>Previsão para o seu investimento</h2>
+<p class="sub">Compare cenários de investimento mensal. Os números usam as médias reais desta campanha, como se a sua conta seguisse o mesmo desempenho.</p>
+<div class="c" style="margin-bottom:12px">
+<label>Outro valor mensal em anúncios (R$)<input id="i1" type="number" value="8000" min="0" step="500" oninput="calc()" onchange="calc()"></label>
+<label>Ticket médio de uma porta (R$, opcional)<input id="i2" type="number" placeholder="para estimar a receita" min="0" oninput="calc()" onchange="calc()"></label>
+</div>
+<div class="c tb"><table id="sim"></table></div>
+<p class="note">Base: R$ 8,75 por clique, CTR de 10,6%, 1 venda a cada 33–40 cliques e cerca de 1.076 impressões a cada R$ 1.000, médias de jan–jun/2026. É uma projeção, não uma garantia: com orçamento menor, a concorrência e o CPC podem mudar o resultado.</p>
+</section>
+</main>
+<footer><div class="w">Dados exportados do Google Ads, de 1º de janeiro a 30 de junho de 2026. Métricas de leilão, cliques e custo medidas pelo próprio Google.</div></footer>
+<script>
+const $=id=>document.getElementById(id);
+const f=(n,d=0)=>n.toLocaleString("pt-BR",{minimumFractionDigits:d,maximumFractionDigits:d});
+const R=n=>"R$ "+f(n,2);
+const is=[["Nossa campanha",40.57,1],["ERM",19.81],["Mercado Livre",12.99],["Galvaminas",11.29],["Favaretto",10],["Prime Portas BH",10],["Tecnoportas",10],["Portaco BH",10]];
+$("cmp").innerHTML=is.map(([n,v,m])=>`<div class="r${m?" me":""}"><span>${n}</span><div class="t"><i style="width:${v*2.2}%"></i></div><b>${v==10?"&lt;10%":f(v,1)+"%"}</b></div>`).join("");
+$("k").innerHTML=[["56.602","impressões do anúncio"],["6.015","cliques"],["10,6%","CTR (cliques ÷ impressões)"],["R$ 8,75","custo médio por clique"],["R$ 52,6 mil","investidos em 6 meses"],["30","cidades atendidas"]].map(([a,b])=>`<div class="c"><div class="n">${a}</div><span>${b}</span></div>`).join("");
+const au=[["ERM",19.81,48.23,45],["Mercado Livre",12.99,24.1,28.1],["Galvaminas",11.29,20.42,14.41],["Tecnoportas",10,29.47,22.59],["Portaco BH",10,16.45,11.07],["Favaretto",10,17.5,10.38],["Prime Portas BH",10,15.68,12.85]];
+$("auc").innerHTML="<tr><th>Concorrente</th><th>Parcela de impr.</th><th>Acima de você</th><th>1ª posição</th></tr>"+au.map(a=>`<tr><td>${a[0]}</td><td>${a[1]==10?"&lt;10%":f(a[1],1)+"%"}</td><td>${f(a[2],1)}%</td><td>${f(a[3],1)}%</td></tr>`).join("")+`<tr><td><b>Nossa campanha</b></td><td><b>40,6%</b></td><td>–</td><td><b>51,0%</b></td></tr>`;
+$("dev").innerHTML="<tr><th>Dispositivo</th><th>Impr.</th><th>Cliques</th><th>CTR</th><th>CPC médio</th><th>Custo</th></tr>"+[["Celular",44298,4940,"11,15%",8.38,41391.29],["Computador",12251,1070,"8,73%",10.44,11174.43]].map(d=>`<tr><td>${d[0]}</td><td>${f(d[1])}</td><td>${f(d[2])}</td><td>${d[3]}</td><td>${R(d[4])}</td><td>${R(d[5])}</td></tr>`).join("");
+const lc=[["Belo Horizonte",27429,2986,"10,89%",9.07],["Contagem",5421,599,"11,05%",9.77],["Betim",4081,393,"9,63%",8.81],["Ibirité",4030,368,"9,13%",8.54],["Ribeirão das Neves",1754,197,"11,23%",8.2],["Santa Luzia",2887,288,"9,98%",8.1],["Divinópolis",1759,184,"10,46%",7.17],["Sete Lagoas",1647,173,"10,5%",7.83]];
+$("loc").innerHTML="<tr><th>Cidade</th><th>Impr.</th><th>Cliques</th><th>CTR</th><th>CPC médio</th></tr>"+lc.map(c=>`<tr><td>${c[0]}</td><td>${f(c[1])}</td><td><span class="bar" style="width:${c[2]/30}px"></span>${f(c[2])}</td><td>${c[3]}</td><td>${R(c[4])}</td></tr>`).join("");
+$("kw").innerHTML="<tr><th>Palavra-chave</th><th>Cliques</th><th>Custo</th><th>CPC médio</th></tr>"+[["porta de enrolar automatica",2906,28942.41,9.96],["porta de aço",1228,8671.17,7.06],["porta de enrolar",190,1511.72,7.96]].map(k=>`<tr><td>${k[0]}</td><td>${f(k[1])}</td><td>${R(k[2])}</td><td>${R(k[3])}</td></tr>`).join("");
+function calc(){const t=+$("i2").value||0,cs=[1500,3000,5000,+$("i1").value||0];
+const rows=[["Investimento por mês",b=>R(b).replace(",00","")],["Impressões do anúncio",b=>f(b*1.076)],["Cliques no site",b=>f(b/8.75)],["CTR / custo por clique",b=>"10,6% / R$ 8,75"],["Portas vendidas por mês",b=>{const c=b/8.75,a=Math.round(c*.025),z=Math.round(c*.03);return "<b>"+(a==z?f(a):f(a)+" a "+f(z))+"</b>"}],["Investimento por porta vendida",b=>b?"R$ 292 a R$ 351":"–"],["Receita estimada",b=>t&&b?"R$ "+f(b/8.75*.025*t)+" a "+f(b/8.75*.03*t):"informe o ticket"]];
+$("sim").innerHTML="<tr><th></th>"+cs.map((b,i)=>`<th${i==3?' class="h"':""}>${i==3?"Seu valor":"Cenário "+(i+1)}</th>`).join("")+"</tr>"+rows.map(r=>`<tr><td>${r[0]}</td>`+cs.map((b,i)=>`<td${i==3?' class="h"':""}>${r[1](b)}</td>`).join("")+"</tr>").join("")}
+calc();
+
+const hb=(l,v,m,me)=>`<div class="hb${me?" me":""}"><span>${l}</span><div class="t"><i style="width:${v/m*100}%"></i></div><b>${f(v,1)}%</b></div>`;
+$("gp").innerHTML=[["Parcela de impressões",19.46,40.57],["Parte superior da página",81.36,90.96],["1ª posição na página",31.06,50.98]].map(([t,x,y])=>`<div class="gt">${t}</div>`+hb("2024",x,100,0)+hb("2026",y,100,1)).join("");
+const rk=(id,a)=>{const m=a[0][1];$(id).innerHTML=a.map(r=>hb(r[0],r[1],m,r[0]=="Nossa campanha")).join("")};
+rk("rk1",[["Redseg",46.24],["Mercado Livre",31.75],["Portaco BH",31.64],["Nossa campanha",31.06],["ERM",29.28],["Atend. Rápido",28.46],["Favaretto",18.73],["Garen",16.9]]);
+rk("rk2",[["Nossa campanha",50.98],["ERM",45],["Mercado Livre",28.1],["Tecnoportas",22.59],["Galvaminas",14.41],["Prime Portas",12.85],["Portaco BH",11.07],["Favaretto",10.38]]);
+const P=["#4a8de0","#35b29b","#ef6b5a","#f5a83c","#8b6fd6"];
+function cols(id,v,l,fm,ac){const m=Math.max(...v),w=340/v.length;let o="";v.forEach((x,i)=>{const h=x/m*95,bx=i*w+w*.15,bw=w*.7;o+=`<rect style="fill:${ac(i)?P[i%5]:"#cdd6e8"}" x="${bx}" y="${115-h}" width="${bw}" height="${h}" rx="2"/><text class="tx" font-size="${v.length>8?9:11}" x="${bx+bw/2}" y="${109-h}" text-anchor="middle">${fm(x)}</text><text class="tx" font-size="10" x="${bx+bw/2}" y="132" text-anchor="middle">${l[i]}</text>`});$(id).innerHTML=o}
+cols("c2",[387,534,723,1180,869],["Abr","Mai","Jun","Ago","Set"],x=>f(x),()=>0);
+cols("c1",[963,1060,1140,1060,927,865],["Jan","Fev","Mar","Abr","Mai","Jun"],x=>f(x),()=>1);
+cols("c4",[1,1.535,1.977,3.842,3.765,4.836,6.072,6.706,6.941,7.994,8.11],["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov"],x=>f(x,1)+"×",i=>i>=3&&i<=8);
+</script>
+</body>
+</html>

@@ -1,600 +1,203 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Comparativo - Tráfego Pago</title>
-  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
-  <style>
-    /* Custom scrollbar for webkit */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(156, 163, 175, 0.3);
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(156, 163, 175, 0.5);
-    }
-    
-    /* Print specific optimization */
-    @media print {
-      aside, header, button {
-        display: none !important;
-      }
-      main {
-        padding: 0 !important;
-      }
-      .view-panel {
-        display: block !important;
-        page-break-after: always;
-      }
-    }
-  </style>
-</head>
-<body class="bg-[#f8fafc] text-slate-800 antialiased font-sans min-h-screen flex flex-col md:flex-row">
+<title>Proposta Paviote Agência</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: apresentação em rolagem única, três partes empilhadas (resultados, site, proposta) sob uma barra fixa. Tema claro único, de propósito, com as quatro cores do Google. */
+:root{--bg:#f6f8fc;--surface:#ffffff;--ink:#202124;--mut:#5f6368;--line:#dadce0;--blue:#4285f4;--blue-ink:#1a56c4;--red:#ea4335;--yel:#fbbc04;--grn:#1e8e3e;--tint:#e8f0fe;--note-bg:#fff4d6;--note-ink:#7a5600;--note-line:#f1d27a;
+--display:"Plus Jakarta Sans",Arial,sans-serif;--body:Inter,Arial,sans-serif;color-scheme:light}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--body)}
+h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-.025em;line-height:1.12;text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+.w{width:min(1100px,100% - 32px);margin-inline:auto}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .w{display:flex;align-items:center;gap:20px;min-height:60px}
+.lg{display:flex;align-items:center;gap:10px;font:800 18px var(--display);text-decoration:none;margin-right:auto}
+.top nav{display:flex;gap:6px}
+.top nav a{font-size:14px;font-weight:500;color:var(--mut);text-decoration:none;padding:8px 14px;border-radius:99px}
+.top nav a:hover{background:var(--tint);color:var(--blue-ink)}
+.top nav a:focus-visible,.btn:focus-visible,.seg button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+@media(max-width:620px){.top .w{gap:8px}.lg span{display:none}.top nav a{padding:8px 10px;font-size:13px}}
+.cover{padding-block:72px 56px}
+.eyebrow{font:600 13px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--blue-ink);display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.eyebrow::before{content:"";width:34px;height:5px;border-radius:9px;background:linear-gradient(90deg,#4285f4 0 25%,#ea4335 25% 50%,#fbbc04 50% 75%,#34a853 75%)}
+.cover h1{font-size:clamp(34px,5.6vw,64px);font-weight:800;max-width:17ch}
+.cover h1 em{font-style:normal;color:var(--blue)}
+.cover .sub{font-size:clamp(17px,2vw,20px);color:var(--mut);max-width:56ch;margin-top:22px}
+.meta{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:34px;font-size:14px;color:var(--mut)}
+.meta b{display:block;color:var(--ink);font-weight:600;font-size:15px}
+.parts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
+.parts a{display:flex;flex-direction:column;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.parts a:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(32,33,36,.1)}
+.parts small{font:600 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+.parts b{font:700 18px var(--display)}
+.parts span{font-size:14px;color:var(--mut)}
+.parts a:nth-child(1){border-top:4px solid var(--blue)}.parts a:nth-child(2){border-top:4px solid var(--red)}.parts a:nth-child(3){border-top:4px solid var(--yel)}
+@media(max-width:760px){.parts{grid-template-columns:1fr}.cover{padding-block:44px 36px}}
+.part{padding-block:64px}
+.part.alt{background:var(--surface);border-block:1px solid var(--line)}
+.ph{display:flex;flex-direction:column;gap:10px;margin-bottom:30px;max-width:64ch}
+.ph .tag{font:700 13px var(--body);letter-spacing:.08em;text-transform:uppercase}
+.ph h2{font-size:clamp(28px,4vw,42px);font-weight:800}
+.ph p{color:var(--mut);font-size:17px}
+#resultados .tag{color:var(--blue-ink)}#site .tag{color:#c5221f}#proposta .tag{color:#946500}
+.frame{border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--bg)}
+#dash{display:block;width:100%;height:3200px;border:0;background:var(--bg)}
+.bw{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#e8eaed;box-shadow:0 24px 60px rgba(32,33,36,.14)}
+.bar{display:flex;align-items:center;gap:14px;padding:12px 16px;background:#f1f3f4;border-bottom:1px solid var(--line)}
+.dots{display:flex;gap:6px}.dots i{width:11px;height:11px;border-radius:50%;display:block}
+.dots i:nth-child(1){background:#ea4335}.dots i:nth-child(2){background:#fbbc04}.dots i:nth-child(3){background:#34a853}
+.url{flex:1;min-width:0;background:#fff;border:1px solid var(--line);border-radius:99px;padding:5px 14px;font-size:13px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stage{display:grid;place-items:start center;background:#e8eaed;padding:0}
+.stage.mob{padding:24px 0}
+#site-frame{display:block;width:100%;height:720px;border:0;background:#fff;transition:width .3s}
+.stage.mob #site-frame{width:390px;max-width:100%;border:10px solid #202124;border-radius:34px;height:760px}
+.tools{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:16px}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:4px}
+.seg button{font:600 14px var(--body);border:0;background:none;color:var(--mut);padding:8px 18px;border-radius:99px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--blue);color:#fff}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--body);text-decoration:none;border-radius:99px;padding:12px 22px;border:2px solid var(--blue);color:var(--blue-ink);background:transparent}
+.btn.fill{background:var(--grn);border-color:var(--grn);color:#fff}
+.btn:hover{box-shadow:0 8px 20px rgba(32,33,36,.15)}
+.hint{font-size:14px;color:var(--mut);margin-top:14px}
+.ex{display:inline-block;background:var(--note-bg);color:var(--note-ink);border:1px solid var(--note-line);border-radius:99px;font-size:12.5px;font-weight:600;padding:4px 12px}
+.inc{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.inc div{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px}
+.inc h3{font-size:18px;margin-bottom:8px}.inc p{color:var(--mut);font-size:15px}
+.inc svg{width:30px;height:30px;margin-bottom:14px;display:block}
+@media(max-width:860px){.inc{grid-template-columns:1fr 1fr}}@media(max-width:560px){.inc{grid-template-columns:1fr}}
+.sub2{font:700 22px var(--display);margin:56px 0 18px}
+.tl{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:3px solid var(--ink);counter-reset:s}
+.tl div{padding:22px 24px 6px 0;position:relative}
+.tl div::before{content:"";position:absolute;top:-9px;left:0;width:15px;height:15px;border-radius:50%;background:var(--blue);border:3px solid var(--bg)}
+.tl div:nth-child(2)::before{background:var(--red)}.tl div:nth-child(3)::before{background:var(--grn)}
+.tl small{font:600 13px var(--body);color:var(--mut);letter-spacing:.06em;text-transform:uppercase}
+.tl h3{font-size:18px;margin:6px 0 8px}.tl p{font-size:15px;color:var(--mut)}
+@media(max-width:760px){.tl{grid-template-columns:1fr;border-top:0;border-left:3px solid var(--ink)}.tl div{padding:0 0 26px 24px}.tl div::before{top:2px;left:-10px}}
+.inv{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:stretch}
+@media(max-width:860px){.inv{grid-template-columns:1fr}}
+.price{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:28px}
+.price .row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.price .row:last-of-type{border-bottom:0}
+.price .row span{color:var(--mut);font-size:15px}.price .row b{font:800 26px var(--display);white-space:nowrap;font-variant-numeric:tabular-nums}
+.price .row b small{font:500 14px var(--body);color:var(--mut)}
+.gift{color:var(--grn)}.price .cut s{color:#80868b;font-weight:600;text-decoration-color:var(--red);text-decoration-thickness:2px}.price .row.ref b{font-size:20px}.price .row.total{padding-block:20px}.price .row.total b{font-size:34px}.price .row.total{background:var(--tint);margin-inline:-14px;padding-inline:14px;border-radius:12px;border-bottom:0}.price .row.total span{color:var(--ink);font-weight:600}.price .row.total b{color:var(--blue-ink)}
+.price s{color:var(--mut);font-weight:500;font-size:16px;margin-right:6px}
+.fore{justify-content:center;background:var(--ink);color:#fff;border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:18px}
+.fore h3{font-size:20px;color:#fff}
+.fore .big{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fore .big div{background:rgba(255,255,255,.08);border-radius:14px;padding:14px 16px}
+.fore .big b{display:block;font:800 28px var(--display);font-variant-numeric:tabular-nums}
+.fore .big span{font-size:13px;color:#c8ccd1}
+.fore p{font-size:13.5px;color:#c8ccd1}
+.terms{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 28px;margin-top:20px;padding:0;list-style:none}
+.terms li{display:flex;gap:10px;font-size:15px;color:var(--mut)}
+.terms li::before{content:"";flex:none;width:18px;height:18px;margin-top:3px;border-radius:50%;background:var(--tint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M5 9.5l2.5 2.5L13 6.5' fill='none' stroke='%231a56c4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/18px}
+@media(max-width:700px){.terms{grid-template-columns:1fr}}
+.close{margin-top:56px;background:var(--tint);border-radius:24px;padding:clamp(28px,5vw,52px);display:flex;flex-wrap:wrap;gap:22px 40px;align-items:center;justify-content:space-between}
+.close h2{font-size:clamp(26px,3.6vw,38px);max-width:20ch}
+.close p{color:var(--mut);margin-top:10px}
+footer{padding-block:34px 44px;text-align:center;font-size:14px;color:var(--mut);border-top:5px solid;border-image:linear-gradient(90deg,#4285f4 0 25%,#ea4335 25% 50%,#fbbc04 50% 75%,#34a853 75%) 1}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+.opts{margin:6px -14px;padding:20px 14px;background:var(--tint);border-radius:14px}.opts p{font-weight:600;color:var(--ink);margin-bottom:14px}.opts p small{font-weight:400;color:var(--mut);font-size:13px}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.opt{background:#fff;border:2px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:2px}.opt.best{border-color:var(--blue)}.opt span{font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}.opt b{font:800 28px var(--display);color:var(--blue-ink);font-variant-numeric:tabular-nums}.opt b small{font:500 14px var(--body);color:var(--mut)}.opt em{font-style:normal;font-size:13px;color:var(--mut)}@media(max-width:420px){.two{grid-template-columns:1fr}}
+.fore .sc{display:grid;gap:8px}.scr{display:grid;grid-template-columns:1.1fr 1fr .8fr;align-items:center;gap:10px;background:rgba(255,255,255,.08);border-radius:12px;padding:13px 16px;font-variant-numeric:tabular-nums}.scr.h{background:none;padding:0 16px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#aeb4bb}.scr b{font:800 20px var(--display)}.scr strong{font:800 20px var(--display);color:#8ab4f8;text-align:right}.scr span{color:#dfe3e8;font-size:15px}.scr.h span:last-child{text-align:right}.scr.on{outline:2px solid #8ab4f8}
+</style>
 
-  <!-- SIDEBAR & MOBILE HEADER -->
-  <aside class="w-full md:w-64 bg-white border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-between shrink-0 p-4 md:p-0 z-30">
-    <div class="w-full">
-      <!-- Logo Area -->
-      <div class="pb-4 md:p-6 flex items-center justify-between md:justify-start gap-3 border-b border-slate-100 md:border-none">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-lg bg-[#16a34a] flex items-center justify-center text-white font-bold text-lg">
-            L
-          </div>
-          <div>
-            <span class="font-bold text-slate-800 text-base block leading-tight">Louyse Ragazzi</span>
-            <span class="text-xs block text-slate-400 font-medium">Tráfego Analytics</span>
-          </div>
-        </div>
-        <!-- Client Mobile Badge -->
-        <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xxs font-bold rounded-full border border-emerald-100 md:hidden">
-          Relatório Cliente
-        </span>
-      </div>
+<header class="top"><div class="w">
+<a class="lg" href="#topo"><svg width="30" height="30" viewBox="0 0 34 34" aria-hidden="true"><circle cx="9" cy="9" r="7.5" fill="#4285f4"/><circle cx="25" cy="9" r="7.5" fill="#ea4335"/><circle cx="9" cy="25" r="7.5" fill="#fbbc04"/><circle cx="25" cy="25" r="7.5" fill="#34a853"/></svg><span>Paviote Agência</span></a>
+<nav aria-label="Partes da apresentação"><a href="#resultados">Resultados</a><a href="#site">Seu site</a><a href="#proposta">Proposta</a></nav>
+</div></header>
 
-      <!-- Navigation: Segmented Control on mobile, Sidebar menu on desktop -->
-      <div class="mt-4 md:mt-0 px-0 md:px-4">
-        <nav class="grid grid-cols-3 md:flex md:flex-col gap-1 bg-slate-100 md:bg-transparent p-1 md:p-0 rounded-xl md:rounded-none">
-          <button onclick="switchView('dashboard')" data-view="dashboard" class="nav-btn flex items-center justify-center md:justify-start gap-2.5 px-3 md:px-4 py-2.5 rounded-lg text-xs md:text-sm font-semibold transition-all w-full text-center md:text-left shadow-sm bg-white text-emerald-700">
-            <svg class="w-4 h-4 md:w-5 md:h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z"></path></svg>
-            <span class="hidden xs:inline">Dashboard</span>
-            <span class="xs:hidden">Geral</span>
-          </button>
-          <button onclick="switchView('campanhas')" data-view="campanhas" class="nav-btn flex items-center justify-center md:justify-start gap-2.5 px-3 md:px-4 py-2.5 rounded-lg text-xs md:text-sm font-medium transition-all w-full text-center md:text-left text-slate-600 hover:bg-slate-50/50">
-            <svg class="w-4 h-4 md:w-5 md:h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-            <span class="hidden xs:inline">Campanhas</span>
-            <span class="xs:hidden">Listar</span>
-          </button>
-          <button onclick="switchView('comparativos')" data-view="comparativos" class="nav-btn flex items-center justify-center md:justify-start gap-2.5 px-3 md:px-4 py-2.5 rounded-lg text-xs md:text-sm font-medium transition-all w-full text-center md:text-left text-slate-600 hover:bg-slate-50/50">
-            <svg class="w-4 h-4 md:w-5 md:h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
-            <span class="hidden xs:inline">Comparativos</span>
-            <span class="xs:hidden">Comparar</span>
-          </button>
-        </nav>
-      </div>
-    </div>
+<main id="topo">
+<section class="cover"><div class="w">
+<div class="eyebrow">Proposta comercial</div>
+<h1>Mais pedidos de orçamento para <em>a sua empresa</em>, direto do Google</h1>
+<p class="sub">Mostramos o que uma campanha bem feita entregou no mesmo segmento, o site que já deixamos pronto para a sua empresa e como podemos trabalhar juntos.</p>
+<div class="meta"><div><b>Preparada para</b>Sua empresa</div><div><b>Preparada por</b>Paviote Agência</div><div><b>Data</b>Outubro de 2026</div></div>
+<div class="parts">
+<a href="#resultados"><small>Parte 1</small><b>Resultados</b><span>Dados reais de campanha de portas de aço automáticas, de janeiro a junho de 2026.</span></a>
+<a href="#site"><small>Parte 2</small><b>Seu novo site</b><span>Modelo navegável, no computador e no celular.</span></a>
+<a href="#proposta"><small>Parte 3</small><b>Proposta</b><span>O que está incluso, investimento e prazo.</span></a>
+</div></div></section>
 
-    <!-- User Profile Bottom (Hidden on mobile) -->
-    <div class="p-4 border-t border-slate-200 hidden md:block">
-      <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 transition-all cursor-pointer">
-        <div class="w-9 h-9 rounded-full bg-slate-300 flex items-center justify-center font-bold text-slate-700 text-sm">
-          MT
-        </div>
-        <div>
-          <span class="font-semibold text-slate-800 text-sm block">Mestre do Tráfego</span>
-          <span class="text-xs text-slate-400 block">Gestor de Mídia</span>
-        </div>
-      </div>
-    </div>
-  </aside>
+<section class="part alt" id="resultados"><div class="w">
+<div class="ph"><span class="tag">Parte 1 · Resultados</span><h2>O que uma campanha bem gerida entregou</h2><p>Painel de uma campanha de portas de aço automáticas no Google Ads, com os mesmos concorrentes que você enfrenta. No fim, o simulador mostra o cenário para o investimento que você escolher.</p></div>
+<div class="frame"><iframe id="dash" src="dashboard.html" title="Painel de resultados da campanha" loading="eager"></iframe></div>
+</div></section>
 
-  <!-- MAIN CONTENT AREA -->
-  <main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
-    <!-- Header (Hidden on mobile for cleaner app look, or kept small) -->
-    <header class="h-14 bg-white border-b border-slate-200 px-4 md:px-6 flex items-center justify-between shrink-0">
-      <div class="flex items-center gap-4 flex-1">
-        <span id="view-title" class="font-bold text-slate-800 text-lg md:text-xl">Dashboard Geral</span>
-      </div>
-      <!-- Right Header Actions -->
-      <div class="flex items-center gap-3">
-        <button onclick="window.print()" class="p-2 text-slate-400 hover:text-slate-650 rounded-lg hover:bg-slate-50 transition-all" title="Imprimir Relatório">
-          <svg class="w-4.5 h-4.5 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-        </button>
-        <div class="w-7 h-7 rounded-full bg-slate-200 flex items-center justify-center font-semibold text-slate-700 text-xs">
-          L
-        </div>
-      </div>
-    </header>
+<section class="part" id="site"><div class="w">
+<div class="ph"><span class="tag">Parte 2 · Seu novo site</span><h2>O site que preparamos para a sua empresa</h2><p>Role, clique nas fotos e no vídeo e veja como fica no celular. É um modelo de apresentação: fotos, textos e contatos são de exemplo e, ao fechar, trocamos pelos seus.</p></div>
+<div class="tools">
+<div class="seg" role="group" aria-label="Tamanho da tela"><button id="bd" type="button" aria-pressed="true">Computador</button><button id="bm" type="button" aria-pressed="false">Celular</button></div>
+<a class="btn" href="site.html" target="_blank" rel="noopener">Abrir em tela cheia ↗</a>
+</div>
+<div class="bw"><div class="bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="url">www.suaempresa.com.br</span></div>
+<div class="stage" id="stage"><iframe id="site-frame" src="site.html" title="Modelo do site" loading="lazy"></iframe></div></div>
+<p class="hint">Dica: no modo celular, o menu e os botões ficam do mesmo jeito que o seu cliente verá no WhatsApp ou no Google.</p>
+</div></section>
 
-    <!-- VIEW: 1. DASHBOARD (Overview) -->
-    <div id="view-dashboard" class="view-panel p-4 md:p-6 space-y-4 md:space-y-6 max-w-7xl w-full mx-auto">
-      
-      <!-- Green Promo Banner (SellPilot Style) -->
-      <div class="bg-emerald-800 text-white rounded-2xl p-4 md:p-6 relative overflow-hidden shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div class="absolute -right-16 -top-16 w-48 h-48 bg-emerald-700 rounded-full opacity-30 pointer-events-none"></div>
-        <div class="absolute -right-4 -bottom-16 w-32 h-32 bg-emerald-600 rounded-full opacity-20 pointer-events-none"></div>
-        <div class="relative z-10 space-y-1">
-          <h2 class="text-base md:text-xl font-bold">Análise Comparativa: Eric vs. Casal</h2>
-          <p class="text-emerald-100 text-xs md:text-sm max-w-xl leading-relaxed">
-            A campanha do Eric demonstrou eficiência superior de custo e volume de conversão, convertendo 46.7% mais leads em relação ao alcance.
-          </p>
-        </div>
-        <div class="relative z-10 flex items-center shrink-0">
-          <button onclick="window.print()" class="bg-white text-emerald-800 font-semibold px-4 py-2 md:px-5 md:py-2.5 rounded-xl shadow-md hover:bg-emerald-50 active:scale-95 transition-all text-xs">
-            Imprimir Relatório
-          </button>
-        </div>
-      </div>
+<section class="part alt" id="proposta"><div class="w">
+<div class="ph"><span class="tag">Parte 3 · Proposta</span><h2>Como vamos trabalhar juntos</h2><p>Gestão de tráfego pago, Google Meu Negócio, site e manutenção, tudo por R$ 600 por mês ou R$ 1.500 à vista nos 3 primeiros meses. Com medição de verdade e relatório todo mês.</p></div>
 
-      <!-- METRICS GRID (2 columns on mobile, 4 columns on desktop) -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-        <!-- Metric 1: Total Leads -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col justify-between min-h-[140px] md:min-h-0 space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="text-[10px] md:text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Leads</span>
-            <span class="p-1.5 md:p-2 rounded-lg bg-emerald-50 text-emerald-600 shrink-0">
-              <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-            </span>
-          </div>
-          <div class="flex items-baseline gap-1">
-            <span class="text-2xl md:text-3xl font-bold text-slate-800">615</span>
-          </div>
-          <!-- Detailed Campanha breakdown inside card -->
-          <div class="text-[10px] md:text-xs text-slate-500 border-t border-slate-100 pt-2 space-y-0.5">
-            <div class="flex justify-between"><span>Eric:</span> <span class="font-semibold text-emerald-600">319</span></div>
-            <div class="flex justify-between"><span>Casal:</span> <span class="font-semibold text-slate-500">296</span></div>
-          </div>
-        </div>
+<div class="inc">
+<div><svg viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="13" fill="#e8f0fe"/><path d="M9 20l4-5 3 3 5-7" fill="none" stroke="#4285f4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>Gestão de tráfego pago</h3><p>Campanhas no Google por serviço e por cidade, lances ajustados e anúncios para quem já quer comprar.</p></div>
+<div><svg viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="13" fill="#fce8e6"/><path d="M9 9l12 12M21 9L9 21" stroke="#ea4335" stroke-width="2.4" stroke-linecap="round"/></svg><h3>Limpeza de palavras</h3><p>Lista de palavras negativas para não gastar com quem busca emprego, curso ou peça avulsa.</p></div>
+<div><svg viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="13" fill="#fef7e0"/><path d="M15 7.5c-3.4 0-6 2.6-6 5.9 0 4.2 6 9.1 6 9.1s6-4.900 6-9.100c0-3.300-2.600-5.900-6-5.900z" fill="none" stroke="#e37400" stroke-width="2.2" stroke-linejoin="round"/><circle cx="15" cy="13.400" r="2.100" fill="#e37400"/></svg><h3>Google Meu Negócio</h3><p>Configuração completa do perfil e manutenção todo mês: fotos, horários, posts e resposta às avaliações.</p></div>
+<div><svg viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="13" fill="#e6f4ea"/><path d="M10 15.5l3.5 3.5 6.5-7" fill="none" stroke="#1e8e3e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>Conversões bem medidas</h3><p>Cliques no WhatsApp e ligações marcados do jeito certo, para você ver cada pedido de orçamento.</p></div>
+<div><svg viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="13" fill="#e8f0fe"/><rect x="9" y="9" width="12" height="12" rx="2" fill="none" stroke="#4285f4" stroke-width="2.2"/><path d="M9 13h12" stroke="#4285f4" stroke-width="2.2"/></svg><h3>Site novo e manutenção</h3><p>O modelo da parte 2, publicado com as suas fotos, avaliações e contatos, e mantido todo mês.</p></div>
+<div><svg viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="13" fill="#fce8e6"/><path d="M9 20v-5M15 20V10M21 20v-8" stroke="#ea4335" stroke-width="2.6" stroke-linecap="round"/></svg><h3>Relatório mensal</h3><p>Reunião curta todo mês, com número de cliques, custo e o que vamos ajustar no próximo.</p></div>
+</div>
 
-        <!-- Metric 2: Total Investido -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col justify-between min-h-[140px] md:min-h-0 space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="text-[10px] md:text-xs font-semibold text-slate-400 uppercase tracking-wider">Valor Usado</span>
-            <span class="p-1.5 md:p-2 rounded-lg bg-emerald-50 text-emerald-600 shrink-0">
-              <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </span>
-          </div>
-          <div class="flex items-baseline gap-0.5">
-            <span class="text-xl md:text-3xl font-bold text-slate-800">R$ 5.233</span>
-            <span class="text-[10px] md:text-sm font-semibold text-slate-500">,09</span>
-          </div>
-          <div class="text-[10px] md:text-xs text-slate-500 border-t border-slate-100 pt-2 space-y-0.5">
-            <div class="flex justify-between"><span>Eric:</span> <span class="font-semibold text-emerald-600 text-[10px] md:text-xs">R$ 2.372,05</span></div>
-            <div class="flex justify-between"><span>Casal:</span> <span class="font-semibold text-slate-500 text-[10px] md:text-xs">R$ 2.861,04</span></div>
-          </div>
-        </div>
+<h3 class="sub2">Primeiros 90 dias</h3>
+<div class="tl">
+<div><small>Semana 1</small><h3>Diagnóstico e medição</h3><p>Acesso à conta, revisão do que existe hoje, conversões configuradas e perfil do Google Meu Negócio organizado.</p></div>
+<div><small>Semanas 2 a 4</small><h3>Campanhas no ar</h3><p>Nova estrutura publicada, palavras negativas aplicadas, site novo no ar e primeiras avaliações respondidas.</p></div>
+<div><small>Meses 2 e 3</small><h3>Otimização e escala</h3><p>Ajuste de lances, cidades e horários, e aumento de verba onde o retorno aparece.</p></div>
+</div>
 
-        <!-- Metric 3: CPL Médio -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col justify-between min-h-[140px] md:min-h-0 space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="text-[10px] md:text-xs font-semibold text-slate-400 uppercase tracking-wider">CPL Médio</span>
-            <span class="p-1.5 md:p-2 rounded-lg bg-emerald-50 text-emerald-600 shrink-0">
-              <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 8h6m-5 0a3 3 0 110 6H9l3 3m-3-6h6m6 1a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </span>
-          </div>
-          <div class="flex items-baseline gap-1">
-            <span class="text-2xl md:text-3xl font-bold text-slate-800">R$ 8,51</span>
-          </div>
-          <div class="text-[10px] md:text-xs text-slate-500 border-t border-slate-100 pt-2 space-y-0.5">
-            <div class="flex justify-between"><span>Eric:</span> <span class="font-semibold text-emerald-600">R$ 7,44</span></div>
-            <div class="flex justify-between"><span>Casal:</span> <span class="font-semibold text-slate-500">R$ 9,67</span></div>
-          </div>
-        </div>
+<h3 class="sub2">Investimento</h3>
+<div class="inv">
+<div class="price">
+<div class="row"><span>Gestão de tráfego pago<br><small>campanhas, lances e relatório mensal</small></span><b class="cut"><s>R$ 1.800</s><small> /mês</small></b></div>
+<div class="row"><span>Google Meu Negócio<br><small>configuração inicial e manutenção mensal</small></span><b class="cut"><s>R$ 400</s><small> /mês</small></b></div>
+<div class="row"><span>Site novo<br><small>pagamento único, publicado com os seus dados</small></span><b class="cut"><s>R$ 1.500</s></b></div>
+<div class="row"><span>Manutenção do site<br><small>ajustes, atualização de fotos e suporte</small></span><b class="cut"><s>R$ 300</s><small> /mês</small></b></div>
+<div class="row ref"><span>Valor de tabela dos 3 primeiros meses<br><small>3 × R$ 2.500 + R$ 1.500 do site</small></span><b class="cut"><s>R$ 9.000</s></b></div>
+<div class="opts"><p>Seu investimento nos 3 primeiros meses<br><small>tudo incluso: tráfego, Google Meu Negócio, site e manutenção</small></p>
+<div class="two"><div class="opt"><span>Mensal</span><b>R$ 600<small> /mês</small></b><em>3 parcelas</em></div><div class="opt best"><span>Pagamento único</span><b>R$ 1.500</b><em>pelos 3 meses, à vista</em></div></div></div>
+<div class="row"><span>Verba de anúncios sugerida<br><small>paga direto ao Google, na sua conta</small></span><b>R$ 3.000<small> /mês</small></b></div>
+</div>
+<div class="fore"><h3>O que esperar, conforme a verba</h3>
+<div class="sc"><div class="scr h"><span>Verba</span><span>Cliques</span><span>Vendas</span></div>
+<div class="scr"><b>R$ 1.500</b><span>≈ 170</span><strong>4 a 5</strong></div>
+<div class="scr"><b>R$ 2.000</b><span>≈ 230</span><strong>6 a 7</strong></div>
+<div class="scr on"><b>R$ 3.000</b><span>≈ 340</span><strong>9 a 10</strong></div></div>
+<p>Previsão de referência, calculada com os números da campanha mostrada na parte 1 (custo por clique de R$ 8,75 e de 2,5% a 3% dos cliques virando venda). Não é garantia de resultado.</p></div>
+</div>
+<ul class="terms">
+<li>A conta de anúncios fica no nome da sua empresa</li>
+<li>Relatório e reunião todo mês</li>
+<li>Atendimento direto pelo WhatsApp em dias úteis</li>
+<li>Os 3 primeiros meses sem multa e sem prender você: continua só se estiver gostando do resultado</li>
+</ul>
 
-        <!-- Metric 4: Alcance Total -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col justify-between min-h-[140px] md:min-h-0 space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="text-[10px] md:text-xs font-semibold text-slate-400 uppercase tracking-wider">Alcance</span>
-            <span class="p-1.5 md:p-2 rounded-lg bg-emerald-50 text-emerald-600 shrink-0">
-              <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-            </span>
-          </div>
-          <div class="flex items-baseline gap-1">
-            <span class="text-2xl md:text-3xl font-bold text-slate-800">85.115</span>
-          </div>
-          <div class="text-[10px] md:text-xs text-slate-500 border-t border-slate-100 pt-2 space-y-0.5">
-            <div class="flex justify-between"><span>Eric:</span> <span class="font-semibold text-emerald-600">36.083</span></div>
-            <div class="flex justify-between"><span>Casal:</span> <span class="font-semibold text-slate-500">49.032</span></div>
-          </div>
-        </div>
-      </div>
+<div class="close"><div><h2>Pronto para começar?</h2><p>Proposta válida por 7 dias</p></div>
+<a class="btn fill" href="#" id="wa"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>Fechar pelo WhatsApp</a></div>
+</div></section>
+</main>
+<footer><div class="w">Paviote Agência · Gestão de anúncios no Google</div></footer>
 
-      <!-- MAIN CHART & INSIGHTS ROW -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Left: Chart -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-4 md:p-6 shadow-sm lg:col-span-2 space-y-6">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div>
-              <h3 class="text-slate-800 font-bold text-base md:text-lg">Comparativo de Desempenho</h3>
-              <p class="text-slate-400 text-xs font-medium">Visualização gráfica dos principais KPIs</p>
-            </div>
-            <div class="flex items-center gap-4 text-xs font-semibold">
-              <div class="flex items-center gap-1.5">
-                <span class="w-3.5 h-3.5 bg-emerald-500 rounded-md"></span>
-                <span class="text-slate-600">Eric</span>
-              </div>
-              <div class="flex items-center gap-1.5">
-                <span class="w-3.5 h-3.5 bg-slate-300 rounded-md"></span>
-                <span class="text-slate-600">Casal</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="space-y-6">
-            <!-- Leads Bar Chart -->
-            <div>
-              <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-3">Leads Gerados</span>
-              <div class="flex items-end gap-4 md:gap-6 h-28 md:h-36 border-b border-slate-100 pb-2 px-2 md:px-4">
-                <div class="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
-                  <div class="w-full bg-emerald-500 hover:bg-emerald-600 transition-all rounded-t-lg relative flex items-center justify-center font-bold text-white text-xs cursor-pointer" style="height: 100%;">
-                    319
-                    <div class="absolute -top-10 bg-slate-800 text-white text-xxs px-2.5 py-1.5 rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap z-20">
-                      Campanha 1 LEAD
-                    </div>
-                  </div>
-                  <span class="text-xs font-semibold text-slate-600">Eric</span>
-                </div>
-                <div class="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
-                  <div class="w-full bg-slate-300 hover:bg-slate-400 transition-all rounded-t-lg relative flex items-center justify-center font-bold text-slate-700 text-xs cursor-pointer" style="height: 92.7%;">
-                    296
-                    <div class="absolute -top-10 bg-slate-800 text-white text-xxs px-2.5 py-1.5 rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap z-20">
-                      Vendas Preenchimento
-                    </div>
-                  </div>
-                  <span class="text-xs font-semibold text-slate-600">Casal</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- CPL Bar Chart -->
-            <div>
-              <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-3">Custo por Lead (CPL)</span>
-              <div class="flex items-end gap-4 md:gap-6 h-28 md:h-36 border-b border-slate-100 pb-2 px-2 md:px-4">
-                <div class="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
-                  <div class="w-full bg-emerald-400 hover:bg-emerald-500 transition-all rounded-t-lg relative flex items-center justify-center font-bold text-white text-xs cursor-pointer" style="height: 76.9%;">
-                    R$ 7,44
-                    <div class="absolute -top-10 bg-slate-800 text-white text-xxs px-2.5 py-1.5 rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap z-20">
-                      Custo Super Eficiente (-23%)
-                    </div>
-                  </div>
-                  <span class="text-xs font-semibold text-slate-600">Eric</span>
-                </div>
-                <div class="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
-                  <div class="w-full bg-red-400 hover:bg-red-500 transition-all rounded-t-lg relative flex items-center justify-center font-bold text-white text-xs cursor-pointer" style="height: 100%;">
-                    R$ 9,67
-                    <div class="absolute -top-10 bg-slate-800 text-white text-xxs px-2.5 py-1.5 rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-all pointer-events-none whitespace-nowrap z-20">
-                      CPL Elevado
-                    </div>
-                  </div>
-                  <span class="text-xs font-semibold text-slate-600">Casal</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right: Insights -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-4 md:p-6 shadow-sm space-y-6">
-          <div>
-            <h3 class="text-slate-800 font-bold text-base md:text-lg">Análise & Recomendações</h3>
-            <p class="text-slate-400 text-xs font-medium">Parecer técnico do especialista de tráfego</p>
-          </div>
-          <div class="space-y-4">
-            <div class="flex gap-3 p-3 bg-emerald-50 border border-emerald-100 rounded-xl">
-              <span class="text-emerald-600 shrink-0">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-              </span>
-              <div class="space-y-1">
-                <h4 class="text-xs font-bold text-emerald-800">Eric é o Vencedor de ROI</h4>
-                <p class="text-xxs text-emerald-700 leading-relaxed">
-                  A campanha <strong>Eric</strong> obteve um CPL de <strong>R$ 7,44</strong>, sendo 23% mais econômica que a campanha Casal, poupando verba de conversão.
-                </p>
-              </div>
-            </div>
-            <div class="flex gap-3 p-3 bg-emerald-50 border border-emerald-100 rounded-xl">
-              <span class="text-emerald-600 shrink-0">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-              </span>
-              <div class="space-y-1">
-                <h4 class="text-xs font-bold text-emerald-800">Eficiência de Conversão: +46.7%</h4>
-                <p class="text-xxs text-emerald-700 leading-relaxed">
-                  A campanha Eric converteu **0.88%** do alcance em leads, enquanto a campanha Casal converteu apenas **0.60%**. A conversão do criativo Eric é muito mais forte.
-                </p>
-              </div>
-            </div>
-            <div class="flex gap-3 p-3 bg-amber-50 border border-amber-100 rounded-xl">
-              <span class="text-amber-600 shrink-0">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-              </span>
-              <div class="space-y-1">
-                <h4 class="text-xs font-bold text-amber-800">Atenção com Desperdício de Verba</h4>
-                <p class="text-xxs text-amber-700 leading-relaxed">
-                  A campanha <strong>Casal</strong> usou o maior orçamento (R$ 2.861,04) para gerar menos leads (296). Recomenda-se remanejar parte dessa verba para a campanha Eric.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- DETAILED CAMPAIGN TABLE -->
-      <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
-        <div class="p-4 md:p-6 border-b border-slate-100 flex items-center justify-between">
-          <div>
-            <h3 class="text-slate-800 font-bold text-base md:text-lg">Tabela de Desempenho de Mídia</h3>
-            <p class="text-slate-400 text-xs font-medium">Dados brutos de taxa de eficiência</p>
-          </div>
-          <!-- Mobile Horizontal Scroll Tip -->
-          <span class="text-[9px] md:hidden font-bold text-slate-400 uppercase tracking-widest animate-pulse flex items-center gap-1">
-            Arrastar ↔
-          </span>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse min-w-[700px] md:min-w-0">
-            <thead>
-              <tr class="bg-slate-50 border-b border-slate-100">
-                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Médico</th>
-                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Nome da Campanha</th>
-                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider text-center">Leads</th>
-                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider text-center">Alcance</th>
-                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider text-center">CPL</th>
-                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider text-center">Conversão</th>
-                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Valor Usado</th>
-                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Status CPL</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-100 text-sm">
-              <tr class="hover:bg-slate-50/50 transition-colors">
-                <td class="px-6 py-4 font-bold text-slate-800">Eric</td>
-                <td class="px-6 py-4 text-slate-500">Campanha 1 LEAD</td>
-                <td class="px-6 py-4 text-center font-semibold text-slate-800">319</td>
-                <td class="px-6 py-4 text-center text-slate-500">36.083</td>
-                <td class="px-6 py-4 text-center font-bold text-emerald-600">R$ 7,44</td>
-                <td class="px-6 py-4 text-center text-slate-500">0,88%</td>
-                <td class="px-6 py-4 font-semibold text-slate-800">R$ 2.372,05</td>
-                <td class="px-6 py-4">
-                  <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100 border-solid">Excelente CPL</span>
-                </td>
-              </tr>
-              <tr class="hover:bg-slate-50/50 transition-colors">
-                <td class="px-6 py-4 font-bold text-slate-800">Casal</td>
-                <td class="px-6 py-4 text-slate-500">Vendas Preenchimento</td>
-                <td class="px-6 py-4 text-center font-semibold text-slate-800">296</td>
-                <td class="px-6 py-4 text-center text-slate-500">49.032</td>
-                <td class="px-6 py-4 text-center font-bold text-slate-800">R$ 9,67</td>
-                <td class="px-6 py-4 text-center text-slate-500">0,60%</td>
-                <td class="px-6 py-4 font-semibold text-slate-800">R$ 2.861,04</td>
-                <td class="px-6 py-4">
-                  <span class="px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-100 border-solid">Ajustar Otimização</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- VIEW: 2. CAMPANHAS (Campanhas Detail View) -->
-    <div id="view-campanhas" class="view-panel p-4 md:p-6 space-y-6 max-w-7xl w-full mx-auto hidden">
-      <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-4 md:p-6 space-y-6">
-        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
-          <div>
-            <h3 class="text-slate-800 font-bold text-base md:text-lg">Gerenciamento Técnico</h3>
-            <p class="text-slate-400 text-xs font-medium">Estrutura de canais de veiculação</p>
-          </div>
-          <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-full text-[10px] md:text-xs font-bold border border-emerald-100">
-            2 Ativas
-          </span>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <!-- Campaign 1: Eric -->
-          <div class="border border-slate-200 rounded-xl p-4 md:p-5 hover:border-emerald-500 hover:shadow-sm transition-all duration-300 space-y-4">
-            <div class="flex items-center justify-between">
-              <div>
-                <span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">Eric</span>
-                <h4 class="text-slate-800 font-bold text-base md:text-lg mt-0.5">Campanha 1 LEAD</h4>
-              </div>
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            </div>
-            
-            <div class="grid grid-cols-2 gap-3 text-xs">
-              <div class="bg-slate-50 p-2.5 md:p-3 rounded-lg">
-                <span class="text-slate-400 block text-[10px] mb-0.5">Leads</span>
-                <span class="font-bold text-slate-800 text-sm md:text-base">319 Leads</span>
-              </div>
-              <div class="bg-slate-50 p-2.5 md:p-3 rounded-lg">
-                <span class="text-slate-400 block text-[10px] mb-0.5">CPL</span>
-                <span class="font-bold text-emerald-600 text-sm md:text-base">R$ 7,44</span>
-              </div>
-              <div class="bg-slate-50 p-2.5 md:p-3 rounded-lg">
-                <span class="text-slate-400 block text-[10px] mb-0.5">Verba</span>
-                <span class="font-bold text-slate-800 text-sm md:text-base">R$ 2.372,05</span>
-              </div>
-              <div class="bg-slate-50 p-2.5 md:p-3 rounded-lg">
-                <span class="text-slate-400 block text-[10px] mb-0.5">Público</span>
-                <span class="font-bold text-slate-800 text-[11px] leading-tight">Mulheres, 25-54</span>
-              </div>
-            </div>
-
-            <div class="text-xs space-y-2 border-t border-slate-100 pt-4">
-              <div class="flex justify-between">
-                <span class="text-slate-400">Canal:</span>
-                <span class="font-semibold text-slate-700">Meta Ads</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-slate-400">Objetivo:</span>
-                <span class="font-semibold text-slate-700">Direct / WhatsApp</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-slate-400">Raio:</span>
-                <span class="font-semibold text-slate-700">Local (10km)</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Campaign 2: Casal -->
-          <div class="border border-slate-200 rounded-xl p-4 md:p-5 hover:border-emerald-500 hover:shadow-sm transition-all duration-300 space-y-4">
-            <div class="flex items-center justify-between">
-              <div>
-                <span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">Casal</span>
-                <h4 class="text-slate-800 font-bold text-base md:text-lg mt-0.5">Vendas Preenchimento</h4>
-              </div>
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            </div>
-            
-            <div class="grid grid-cols-2 gap-3 text-xs">
-              <div class="bg-slate-50 p-2.5 md:p-3 rounded-lg">
-                <span class="text-slate-400 block text-[10px] mb-0.5">Leads</span>
-                <span class="font-bold text-slate-800 text-sm md:text-base">296 Leads</span>
-              </div>
-              <div class="bg-slate-50 p-2.5 md:p-3 rounded-lg">
-                <span class="text-slate-400 block text-[10px] mb-0.5">CPL</span>
-                <span class="font-bold text-slate-800 text-sm md:text-base">R$ 9,67</span>
-              </div>
-              <div class="bg-slate-50 p-2.5 md:p-3 rounded-lg">
-                <span class="text-slate-400 block text-[10px] mb-0.5">Verba</span>
-                <span class="font-bold text-slate-800 text-sm md:text-base">R$ 2.861,04</span>
-              </div>
-              <div class="bg-slate-50 p-2.5 md:p-3 rounded-lg">
-                <span class="text-slate-400 block text-[10px] mb-0.5">Público</span>
-                <span class="font-bold text-slate-800 text-[11px] leading-tight">Mulheres, 25-54</span>
-              </div>
-            </div>
-
-            <div class="text-xs space-y-2 border-t border-slate-100 pt-4">
-              <div class="flex justify-between">
-                <span class="text-slate-400">Canal:</span>
-                <span class="font-semibold text-slate-700">Meta Ads</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-slate-400">Objetivo:</span>
-                <span class="font-semibold text-slate-700">Direct / WhatsApp</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-slate-400">Raio:</span>
-                <span class="font-semibold text-slate-700">Local (10km)</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- VIEW: 3. COMPARATIVOS (Comparativos View) -->
-    <div id="view-comparativos" class="view-panel p-4 md:p-6 space-y-6 max-w-7xl w-full mx-auto hidden">
-      <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-4 md:p-6 space-y-6">
-        <div class="border-b border-slate-100 pb-4">
-          <h3 class="text-slate-800 font-bold text-base md:text-lg">Análise Comparativa Cruzada</h3>
-          <p class="text-slate-400 text-xs font-medium">Cruzamento direto de dados e taxas de conversão</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Leads & Cost comparison -->
-          <div class="border border-slate-100 rounded-2xl p-4 md:p-5 space-y-4">
-            <h4 class="text-slate-800 font-bold text-xs md:text-sm">Distribuição de Conversão (Leads)</h4>
-            <div class="space-y-2">
-              <div class="flex justify-between text-[10px] md:text-xs font-semibold">
-                <span class="text-emerald-600">Eric (319 leads) - 51,9%</span>
-                <span class="text-slate-400">Casal (296 leads) - 48,1%</span>
-              </div>
-              <div class="w-full bg-slate-100 rounded-full h-3 flex overflow-hidden">
-                <div class="bg-emerald-500 h-full" style="width: 51.9%"></div>
-                <div class="bg-slate-300 h-full" style="width: 48.1%"></div>
-              </div>
-            </div>
-            
-            <h4 class="text-slate-800 font-bold text-xs md:text-sm pt-2">Distribuição de Investimento (Spent)</h4>
-            <div class="space-y-2">
-              <div class="flex justify-between text-[10px] md:text-xs font-semibold">
-                <span class="text-emerald-500">Eric (R$ 2.372) - 45,3%</span>
-                <span class="text-slate-500">Casal (R$ 2.861) - 54,7%</span>
-              </div>
-              <div class="w-full bg-slate-100 rounded-full h-3 flex overflow-hidden">
-                <div class="bg-emerald-400 h-full" style="width: 45.3%"></div>
-                <div class="bg-slate-300 h-full" style="width: 54.7%"></div>
-              </div>
-            </div>
-            <p class="text-[10px] text-slate-400 leading-relaxed mt-2">
-              *Nota: A campanha Eric utilizou menos verba (45.3% do total) para gerar a maioria dos leads (51.9%).
-            </p>
-          </div>
-
-          <!-- Reach vs Conversion comparison -->
-          <div class="border border-slate-100 rounded-2xl p-4 md:p-5 space-y-4">
-            <h4 class="text-slate-800 font-bold text-xs md:text-sm">Taxa de Conversão por Alcance</h4>
-            
-            <div class="space-y-2">
-              <div class="flex justify-between text-[11px] md:text-xs">
-                <span class="font-bold text-slate-700">Eric (Campanha 1 LEAD)</span>
-                <span class="font-bold text-emerald-600">0,88%</span>
-              </div>
-              <div class="w-full bg-slate-100 rounded-full h-2">
-                <div class="bg-emerald-500 h-full rounded-full" style="width: 100%"></div>
-              </div>
-            </div>
-
-            <div class="space-y-2">
-              <div class="flex justify-between text-[11px] md:text-xs">
-                <span class="font-bold text-slate-700">Casal (Vendas Preenchimento)</span>
-                <span class="font-bold text-slate-500">0,60%</span>
-              </div>
-              <div class="w-full bg-slate-100 rounded-full h-2">
-                <div class="bg-slate-400 h-full rounded-full" style="width: 68%"></div>
-              </div>
-            </div>
-
-            <div class="bg-slate-50 rounded-xl p-3 md:p-4 mt-2">
-              <h5 class="text-xs font-bold text-slate-700 mb-1">Métrica de Otimização:</h5>
-              <p class="text-[10px] md:text-xs text-slate-500 leading-relaxed">
-                A cada **10.000 pessoas alcançadas**:
-                <br>• O **Eric** entrega **88 leads**.
-                <br>• O **Casal** entrega **60 leads**.
-                <br>Diferença líquida de **+28 leads** apenas otimizando o criativo.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </main>
-
-  <!-- JAVASCRIPT FOR VIEW NAVIGATION -->
-  <script>
-    function switchView(viewName) {
-      // 1. Hide all panels
-      document.querySelectorAll('.view-panel').forEach(panel => {
-        panel.classList.add('hidden');
-      });
-      // 2. Show active panel
-      document.getElementById('view-' + viewName).classList.remove('hidden');
-      
-      // 3. Update Title in Header
-      const titles = {
-        'dashboard': 'Dashboard Geral',
-        'campanhas': 'Campanhas de Tráfego',
-        'comparativos': 'Comparativos de Desempenho'
-      };
-      document.getElementById('view-title').innerText = titles[viewName];
-      
-      // 4. Reset style for all navigation buttons
-      document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.className = "nav-btn flex items-center justify-center md:justify-start gap-2.5 px-3 md:px-4 py-2.5 rounded-lg text-xs md:text-sm font-medium transition-all w-full text-center md:text-left text-slate-600 hover:bg-slate-50/50";
-      });
-      
-      // 5. Apply active style to the selected view button
-      document.querySelectorAll(`[data-view="${viewName}"]`).forEach(btn => {
-        btn.className = "nav-btn flex items-center justify-center md:justify-start gap-2.5 px-3 md:px-4 py-2.5 rounded-lg text-xs md:text-sm font-semibold transition-all w-full text-center md:text-left shadow-sm bg-white text-emerald-700 md:bg-emerald-50 md:shadow-none";
-      });
-    }
-  </script>
-</body>
-</html>
+<script>(function(){try{history.scrollRestoration="manual"}catch(e){}var u=0;["wheel","touchstart","keydown","mousedown"].forEach(function(e){addEventListener(e,function(){u=1},{passive:true,once:true})});function t(){if(!u&&!location.hash)scrollTo(0,0)}t();addEventListener("load",t);addEventListener("pageshow",t);[100,400,900,1800].forEach(function(ms){setTimeout(t,ms)})})();</script>
+<script>
+(function(){
+  var d=document.getElementById("dash");
+  function fit(){try{var doc=d.contentDocument;if(!doc)return;var h=Math.max(doc.documentElement.scrollHeight,doc.body.scrollHeight);if(h>200)d.style.height=h+"px"}catch(e){}}
+  d.addEventListener("load",function(){fit();try{var doc=d.contentDocument;new ResizeObserver(fit).observe(doc.body);doc.addEventListener("click",function(){setTimeout(fit,60)})}catch(e){}setTimeout(fit,600);setTimeout(fit,1800)});
+  window.addEventListener("resize",fit);
+  var st=document.getElementById("stage"),bd=document.getElementById("bd"),bm=document.getElementById("bm");
+  function mode(m){st.classList.toggle("mob",m);bd.setAttribute("aria-pressed",String(!m));bm.setAttribute("aria-pressed",String(m))}
+  bd.onclick=function(){mode(false)};bm.onclick=function(){mode(true)};
+})();
+</script>
